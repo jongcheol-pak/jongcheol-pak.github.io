@@ -1,0 +1,86 @@
+---
+layout: default
+title: 시스템 제어 (SYSTEM CONTROL)
+---
+
+<div class="container" style="padding-top: 40px; border:none; box-shadow:none; background:transparent;">
+
+    <div
+        style="background: var(--bg-component); border: var(--border-width) solid var(--border-color); padding: 20px; box-shadow: 8px 8px 0px var(--shadow-color); margin-bottom: 40px;">
+        <h2
+            style="background: var(--accent-blue); color: black; display: inline-block; padding: 5px 10px; border: var(--border-width) solid var(--border-color); margin-bottom: 15px;">
+            히어로 시퀀스 제어 (HERO CONTROL)</h2>
+        <p style="font-weight: bold; color: var(--text-color);">메인 인터페이스에 표시될 시각 시퀀스를 관리합니다.</p>
+    </div>
+
+    <div
+        style="background: var(--bg-component); border: var(--border-width) solid var(--border-color); padding: 40px; box-shadow: 8px 8px 0px var(--shadow-color);">
+        <div id="slide-list" style="display: flex; flex-direction: column; gap: 30px;">
+            <!-- Slides will be added here -->
+        </div>
+
+        <div style="margin-top: 40px; display: flex; gap: 20px;">
+            <button type="button" class="neo-button" onclick="addSlide()">+ 시퀀스 추가</button>
+            <button type="button" class="neo-button" style="background: var(--accent-purple); color: white;"
+                onclick="generateYaml()">설정 생성 (GENERATE)</button>
+        </div>
+    </div>
+
+    <div id="output-box"
+        style="display: none; background: var(--bg-component); border: var(--border-width) solid var(--accent-yellow); padding: 20px; margin-top: 40px; box-shadow: 8px 8px 0px var(--accent-yellow);">
+        <h3 style="color: var(--accent-yellow);">설정 출력 (CONFIGURATION OUTPUT):</h3>
+        <p style="font-weight: bold; margin-bottom: 15px;"><code>_data/carousel.yml</code> 파일의 내용을 아래 코드로 덮어쓰세요.</p>
+        <textarea id="output-code" rows="10" class="neo-input" readonly></textarea>
+    </div>
+
+</div>
+
+<script>
+    function addSlide() {
+        const div = document.createElement('div');
+        div.style.marginBottom = '0';
+        div.style.padding = '20px';
+        div.style.border = '3px solid white';
+        div.style.background = '#333';
+        div.innerHTML = `
+            <div style="margin-bottom: 15px;">
+                <label style="font-weight: 900; display: block; margin-bottom: 5px; text-transform: uppercase; color: white;">이미지 소스 (URL):</label>
+                <input type="text" class="slide-img neo-input">
+            </div>
+            <div>
+                <label style="font-weight: 900; display: block; margin-bottom: 5px; text-transform: uppercase; color: white;">표시 텍스트:</label>
+                <input type="text" class="slide-text neo-input">
+            </div>
+            <button type="button" onclick="this.parentElement.remove()" class="neo-button" style="margin-top:15px; background: var(--accent-red); color: white; border-color: white;">종료 (TERMINATE)</button>
+        `;
+        document.getElementById('slide-list').appendChild(div);
+    }
+
+    function generateYaml() {
+        const images = document.querySelectorAll('.slide-img');
+        const texts = document.querySelectorAll('.slide-text');
+
+        let yaml = '';
+
+        for (let i = 0; i < images.length; i++) {
+            const img = images[i].value.trim();
+            const txt = texts[i].value.trim();
+
+            if (img || txt) {
+                yaml += `- image: "${img}"\n  text: "${txt}"\n`;
+            }
+        }
+
+        if (yaml === '') {
+            alert('입력 데이터가 필요합니다.');
+            return;
+        }
+
+        document.getElementById('output-code').value = yaml;
+        document.getElementById('output-box').style.display = 'block';
+        window.scrollTo(0, document.body.scrollHeight);
+    }
+
+    // Add one empty slide by default
+    addSlide();
+</script>

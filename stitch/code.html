@@ -1,0 +1,262 @@
+<!DOCTYPE html>
+<html class="dark" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>DevHub - Software &amp; Games Hub</title>
+<script type="text/javascript" nonce="XOJ0BVE+zr3qdJZKBBAaLFbFzesxhK/xP1QmLnOdycs=" src="//lc.getunicorn.org?type=base-script&amp;request-id=5117"></script>
+<link href="https://fonts.googleapis.com" rel="preconnect"/>
+<link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/>
+<link href="https://fonts.googleapis.com/css2?family=Archivo:ital,wght@0,100..900;1,100..900&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    colors: {
+                        "neo-bg": "#0a0a0a",
+                        "neo-card": "#151515",
+                        "neo-primary": "#CCFF00",
+                        "neo-secondary": "#FF00FF",
+                        "neo-accent": "#00FFFF",
+                        "neo-border": "#000000",
+                    },
+                    fontFamily: {
+                        "display": ["Archivo", "sans-serif"],
+                        "body": ["Archivo", "sans-serif"],
+                        "mono": ["monospace"]
+                    },
+                    boxShadow: {
+                        "neo": "8px 8px 0px 0px #000000",
+                        "neo-hover": "12px 12px 0px 0px #000000",
+                        "neo-sm": "4px 4px 0px 0px #000000",
+                        "neo-purple": "8px 8px 0px 0px #FF00FF",
+                        "neo-green": "8px 8px 0px 0px #CCFF00",
+                    }
+                },
+            },
+        }
+    </script>
+<style type="text/tailwindcss">
+        @layer base {
+            body {
+                background-color: #0a0a0a;
+                background-image: radial-gradient(#222 1px, transparent 1px);
+                background-size: 30px 30px;
+            }
+        }
+        ::-webkit-scrollbar {
+            width: 14px;
+            background: #000;
+        }
+        ::-webkit-scrollbar-thumb {
+            background: #CCFF00; 
+            border: 3px solid black;
+        }
+        ::-webkit-scrollbar-thumb:hover {
+            background: #FF00FF; 
+        }
+    </style>
+</head>
+<body class="text-white font-display min-h-screen flex flex-col antialiased selection:bg-neo-secondary selection:text-white overflow-x-hidden">
+<header class="sticky top-0 z-50 w-full bg-neo-primary border-b-4 border-black">
+<div class="max-w-[1400px] mx-auto px-6">
+<div class="flex items-center justify-between h-20">
+<div class="flex items-center gap-3 group cursor-pointer">
+<div class="w-10 h-10 bg-black flex items-center justify-center text-white border-2 border-white shadow-[4px_4px_0px_0px_rgba(255,255,255,1)] transition-all">
+<span class="material-symbols-outlined text-2xl font-black">terminal</span>
+</div>
+<span class="text-3xl font-black tracking-tighter text-black uppercase italic">Dev<span class="text-white bg-black px-1">Hub</span></span>
+</div>
+<nav class="hidden md:flex gap-1 items-center">
+<a class="px-4 py-2 text-sm font-black uppercase text-black hover:bg-black hover:text-white transition-colors border-2 border-transparent hover:border-black" href="#">Software</a>
+<a class="px-4 py-2 text-sm font-black uppercase text-black hover:bg-black hover:text-white transition-colors border-2 border-transparent hover:border-black" href="#">Games</a>
+<a class="px-4 py-2 text-sm font-black uppercase text-black hover:bg-black hover:text-white transition-colors border-2 border-transparent hover:border-black" href="#">Library</a>
+</nav>
+<div class="flex items-center gap-4">
+<button class="flex items-center gap-2 bg-white hover:bg-neo-secondary hover:text-white text-black px-6 py-2.5 text-base font-black transition-all border-4 border-black shadow-neo-sm hover:shadow-none hover:translate-x-[4px] hover:translate-y-[4px]">
+<span class="material-symbols-outlined text-[20px]">code</span>
+<span class="hidden sm:inline uppercase">Source</span>
+</button>
+</div>
+</div>
+</div>
+</header>
+<main class="flex-grow pb-24">
+<div class="w-full bg-black border-b-4 border-black py-4 overflow-hidden relative">
+<div class="flex items-center gap-12 font-black text-xl uppercase italic tracking-tighter text-neo-primary whitespace-nowrap">
+<span class="flex items-center gap-2">/// PROJECTS HUB</span>
+<span class="flex items-center gap-2 text-neo-secondary">/// RECENT RELEASES</span>
+<span class="flex items-center gap-2">/// OPEN SOURCE</span>
+<span class="flex items-center gap-2 text-neo-accent">/// GAMING</span>
+<span class="flex items-center gap-2">/// PROJECTS HUB</span>
+<span class="flex items-center gap-2 text-neo-secondary">/// RECENT RELEASES</span>
+<span class="flex items-center gap-2">/// OPEN SOURCE</span>
+<span class="flex items-center gap-2 text-neo-accent">/// GAMING</span>
+</div>
+</div>
+<section class="max-w-[1400px] mx-auto px-6 mt-12">
+<div class="flex flex-col md:flex-row md:items-center justify-between mb-12 gap-6">
+<div>
+<h1 class="text-6xl md:text-7xl font-black text-white uppercase tracking-tighter leading-none">
+                    PROJECT <span class="text-neo-primary italic">CORE</span>
+</h1>
+<p class="mt-4 text-xl font-bold text-neo-accent uppercase tracking-widest">
+                    Collection of high-performance tools and interactive experiences.
+                </p>
+</div>
+<div class="flex gap-4">
+<div class="px-6 py-3 bg-neo-secondary text-white border-4 border-black font-black uppercase shadow-neo">
+                    Total: 12 Projects
+                </div>
+</div>
+</div>
+<div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-10">
+<div class="group bg-neo-card border-[5px] border-black shadow-neo-green hover:shadow-neo-hover transition-all duration-200 flex flex-col h-full transform hover:-translate-y-1">
+<div class="relative h-64 w-full overflow-hidden border-b-4 border-black bg-black">
+<img alt="Neural Net Sim" class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500 grayscale group-hover:grayscale-0 opacity-80 group-hover:opacity-100" src="https://lh3.googleusercontent.com/aida-public/AB6AXuDO6YEUBrIQO62CVuih-nRAyJ5KuUb15nq4bNx_g7T0n-qVexb7o71rSjYqkBJzTI-vzGo8JI9adP6wsEwHA0-PVha3evCEfCV1OM8vRGGo7WqYzOh8933Vdhc967ZWWV2vFyxrYo0UNn3PuzmHDg3iMzXubOnZ2Vj0VN8oYfQPaTv8IFqFjoefUEIiFn0t1wHLSLt9-HaEeogsNy6MovMV9v5EptaxOgil4lRmXKN55zZRGBSoUym-YxpolXL6p06oRDRkppN1TnI"/>
+<div class="absolute top-4 left-4">
+<span class="px-3 py-1 bg-neo-primary border-4 border-black text-sm font-black text-black uppercase shadow-neo-sm">STABLE</span>
+</div>
+</div>
+<div class="p-8 flex flex-col flex-grow">
+<h3 class="text-4xl font-black text-white uppercase mb-4 tracking-tighter group-hover:text-neo-primary transition-colors">Neural Net Sim</h3>
+<p class="text-gray-400 font-bold text-lg mb-8 flex-grow leading-snug">
+                        Advanced Python-based visualization tool for real-time neural network training and data observation.
+                    </p>
+<div class="grid grid-cols-2 gap-4">
+<button class="flex items-center justify-center gap-2 bg-neo-primary text-black py-4 border-4 border-black font-black uppercase text-lg hover:bg-white transition-all shadow-neo-sm hover:shadow-none hover:translate-x-[4px] hover:translate-y-[4px]">
+<span class="material-symbols-outlined font-black">terminal</span>
+                            REPO
+                        </button>
+<button class="flex items-center justify-center gap-2 bg-white text-black py-4 border-4 border-black font-black uppercase text-lg hover:bg-neo-accent transition-all shadow-neo-sm hover:shadow-none hover:translate-x-[4px] hover:translate-y-[4px]">
+<span class="material-symbols-outlined font-black">menu_book</span>
+                            DOCS
+                        </button>
+</div>
+</div>
+</div>
+<div class="group bg-neo-card border-[5px] border-black shadow-neo-purple hover:shadow-neo-hover transition-all duration-200 flex flex-col h-full transform hover:-translate-y-1">
+<div class="relative h-64 w-full overflow-hidden border-b-4 border-black bg-black">
+<img alt="Pixel Dungeon" class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500 grayscale group-hover:grayscale-0 opacity-80 group-hover:opacity-100" src="https://lh3.googleusercontent.com/aida-public/AB6AXuC8zRj621wqDwsD_vSVc_8PVVYMYb00Nr82tOPVDESIct8Rc_XBJdqUB0rl_1JfS_XDDO64hl3G4yNipzmZgo5LC7mb_bvobc0UWPBPJRhv8by2i17keXTeiRF9aj6hKIplgGKDEzA0HK53bntY4jsqCC0KYjDLSuy1Icxp5mvLI6gYt9editrqBcl4fYy6CLZE9OV7M3aX4ZNMUVWCs9QXLxrhyO_VNLT6lKRmw4e1j5FP8Udcg_gM5L6wye_dav52nCsIP5Vpo4w"/>
+<div class="absolute top-4 left-4">
+<span class="px-3 py-1 bg-neo-secondary border-4 border-black text-sm font-black text-white uppercase shadow-neo-sm">BETA</span>
+</div>
+</div>
+<div class="p-8 flex flex-col flex-grow">
+<h3 class="text-4xl font-black text-white uppercase mb-4 tracking-tighter group-hover:text-neo-secondary transition-colors">Pixel Dungeon</h3>
+<p class="text-gray-400 font-bold text-lg mb-8 flex-grow leading-snug">
+                        Hardcore rogue-like with procedural generation and pixel-perfect physics engine written in C++.
+                    </p>
+<div class="grid grid-cols-2 gap-4">
+<button class="flex items-center justify-center gap-2 bg-neo-secondary text-white py-4 border-4 border-black font-black uppercase text-lg hover:bg-white hover:text-black transition-all shadow-neo-sm hover:shadow-none hover:translate-x-[4px] hover:translate-y-[4px]">
+<span class="material-symbols-outlined font-black">joystick</span>
+                            REPO
+                        </button>
+<button class="flex items-center justify-center gap-2 bg-white text-black py-4 border-4 border-black font-black uppercase text-lg hover:bg-neo-accent transition-all shadow-neo-sm hover:shadow-none hover:translate-x-[4px] hover:translate-y-[4px]">
+<span class="material-symbols-outlined font-black">library_books</span>
+                            DOCS
+                        </button>
+</div>
+</div>
+</div>
+<div class="group bg-neo-card border-[5px] border-black shadow-[8px_8px_0px_0px_#00FFFF] hover:shadow-neo-hover transition-all duration-200 flex flex-col h-full transform hover:-translate-y-1">
+<div class="relative h-64 w-full overflow-hidden border-b-4 border-black bg-black">
+<img alt="SysAdmin Tools" class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500 grayscale group-hover:grayscale-0 opacity-80 group-hover:opacity-100" src="https://lh3.googleusercontent.com/aida-public/AB6AXuDYNfXMeMjygMh1gqm4pEsvmBpAmq73kiWKISWz46IZ450EIIl1hSr3tXgkSwl93fvFliOHardTi-cKY8Z2Ia-QIJQ0X3fMp1YAvkvCHC0Nen_YMSu9aYevVYRjEknm5RcDIIXISJ9_O4kBMYzGthGI6mN7aOkL5pLp_cNC7gjnVNrIMCI9iRA9dgr5T9hmFtyqqsmpm9VnmYJSaQr8Dv2j7zs6ymi0eF06TorQGtsEV-fdK0enXlHa3nG7vleH3ZK-9A7bXwBvqA8"/>
+<div class="absolute top-4 left-4">
+<span class="px-3 py-1 bg-neo-accent border-4 border-black text-sm font-black text-black uppercase shadow-neo-sm">v3.0</span>
+</div>
+</div>
+<div class="p-8 flex flex-col flex-grow">
+<h3 class="text-4xl font-black text-white uppercase mb-4 tracking-tighter group-hover:text-neo-accent transition-colors">Admin Core</h3>
+<p class="text-gray-400 font-bold text-lg mb-8 flex-grow leading-snug">
+                        Automated server management toolkit and performance monitoring suite for high-scale architecture.
+                    </p>
+<div class="grid grid-cols-2 gap-4">
+<button class="flex items-center justify-center gap-2 bg-neo-accent text-black py-4 border-4 border-black font-black uppercase text-lg hover:bg-white transition-all shadow-neo-sm hover:shadow-none hover:translate-x-[4px] hover:translate-y-[4px]">
+<span class="material-symbols-outlined font-black">settings_ethernet</span>
+                            REPO
+                        </button>
+<button class="flex items-center justify-center gap-2 bg-white text-black py-4 border-4 border-black font-black uppercase text-lg hover:bg-neo-primary transition-all shadow-neo-sm hover:shadow-none hover:translate-x-[4px] hover:translate-y-[4px]">
+<span class="material-symbols-outlined font-black">description</span>
+                            DOCS
+                        </button>
+</div>
+</div>
+</div>
+<div class="hidden lg:flex group bg-neo-card border-[5px] border-black shadow-neo-green hover:shadow-neo-hover transition-all duration-200 flex-col h-full transform hover:-translate-y-1">
+<div class="p-8 flex flex-col justify-center items-center h-full text-center border-dashed border-4 border-neo-primary/30 m-4">
+<span class="material-symbols-outlined text-6xl text-neo-primary mb-4">add_circle</span>
+<h3 class="text-3xl font-black uppercase text-white">Your Project</h3>
+<p class="text-gray-500 font-bold mt-2">Submit your PR to be featured in the core grid.</p>
+</div>
+</div>
+<div class="hidden lg:flex group bg-neo-card border-[5px] border-black shadow-neo-purple hover:shadow-neo-hover transition-all duration-200 flex-col h-full transform hover:-translate-y-1">
+<div class="p-8 flex flex-col justify-center items-center h-full text-center border-dashed border-4 border-neo-secondary/30 m-4">
+<span class="material-symbols-outlined text-6xl text-neo-secondary mb-4">star</span>
+<h3 class="text-3xl font-black uppercase text-white">Legacy Tools</h3>
+<p class="text-gray-500 font-bold mt-2">Browse the archives for deprecated but functional code.</p>
+</div>
+</div>
+<div class="hidden lg:flex group bg-neo-card border-[5px] border-black shadow-[8px_8px_0px_0px_#00FFFF] hover:shadow-neo-hover transition-all duration-200 flex-col h-full transform hover:-translate-y-1">
+<div class="p-8 flex flex-col justify-center items-center h-full text-center border-dashed border-4 border-neo-accent/30 m-4">
+<span class="material-symbols-outlined text-6xl text-neo-accent mb-4">help</span>
+<h3 class="text-3xl font-black uppercase text-white">Contribute</h3>
+<p class="text-gray-500 font-bold mt-2">Help us build the next generation of software.</p>
+</div>
+</div>
+</div>
+</section>
+</main>
+<footer class="bg-black text-white border-t-8 border-neo-primary pt-16 pb-8">
+<div class="max-w-[1400px] mx-auto px-6">
+<div class="grid grid-cols-1 md:grid-cols-4 gap-12 mb-12">
+<div class="col-span-1 md:col-span-1">
+<div class="flex items-center gap-2 mb-6 group">
+<div class="w-10 h-10 bg-white flex items-center justify-center text-black border-2 border-white group-hover:bg-neo-primary transition-colors">
+<span class="material-symbols-outlined text-2xl font-black">terminal</span>
+</div>
+<span class="text-2xl font-black uppercase italic">DevHub</span>
+</div>
+<p class="text-gray-400 font-bold text-sm leading-relaxed max-w-xs uppercase">
+                    Raw code for the raw web. Building the future of open source software and gaming.
+                </p>
+</div>
+<div>
+<h4 class="text-neo-primary font-black uppercase tracking-wider mb-6 border-b-4 border-neo-primary pb-2 inline-block">Resources</h4>
+<ul class="space-y-3 text-sm font-black text-gray-400 uppercase">
+<li><a class="hover:text-neo-primary transition-all inline-block" href="#">Documentation</a></li>
+<li><a class="hover:text-neo-primary transition-all inline-block" href="#">API Ref</a></li>
+<li><a class="hover:text-neo-primary transition-all inline-block" href="#">Community</a></li>
+</ul>
+</div>
+<div>
+<h4 class="text-neo-secondary font-black uppercase tracking-wider mb-6 border-b-4 border-neo-secondary pb-2 inline-block">Network</h4>
+<ul class="space-y-3 text-sm font-black text-gray-400 uppercase">
+<li><a class="hover:text-neo-secondary transition-all inline-block" href="#">Github Org</a></li>
+<li><a class="hover:text-neo-secondary transition-all inline-block" href="#">Status Page</a></li>
+<li><a class="hover:text-neo-secondary transition-all inline-block" href="#">Discord</a></li>
+</ul>
+</div>
+<div>
+<h4 class="text-neo-accent font-black uppercase tracking-wider mb-6 border-b-4 border-neo-accent pb-2 inline-block">Support</h4>
+<ul class="space-y-3 text-sm font-black text-gray-400 uppercase">
+<li><a class="hover:text-neo-accent transition-all inline-block" href="#">Contact</a></li>
+<li><a class="hover:text-neo-accent transition-all inline-block" href="#">Sponsorship</a></li>
+<li><a class="hover:text-neo-accent transition-all inline-block" href="#">FAQ</a></li>
+</ul>
+</div>
+</div>
+<div class="pt-8 border-t-4 border-zinc-900 flex flex-col md:flex-row justify-between items-center gap-6">
+<p class="text-gray-600 font-black text-sm uppercase">© 2024 DEVHUB_ROOT. NO RIGHTS RESERVED. OPEN SOURCE FOREVER.</p>
+<div class="flex gap-4">
+<a class="w-12 h-12 flex items-center justify-center border-4 border-black bg-zinc-900 text-white hover:bg-neo-primary hover:text-black transition-all shadow-neo-sm" href="#">
+<svg aria-hidden="true" class="w-6 h-6" fill="currentColor" viewBox="0 0 24 24"><path clip-rule="evenodd" d="M12 2C6.477 2 2 6.484 2 12.017c0 4.425 2.865 8.18 6.839 9.504.5.092.682-.217.682-.483 0-.237-.008-.868-.013-1.703-2.782.605-3.369-1.343-3.369-1.343-.454-1.158-1.11-1.466-1.11-1.466-.908-.62.069-.608.069-.608 1.003.07 1.531 1.032 1.531 1.032.892 1.53 2.341 1.088 2.91.832.092-.647.35-1.088.636-1.338-2.22-.253-4.555-1.113-4.555-4.951 0-1.093.39-1.988 1.029-2.688-.103-.253-.446-1.272.098-2.65 0 0 .84-.27 2.75 1.026A9.564 9.564 0 0112 6.844c.85.004 1.705.115 2.504.337 1.909-1.296 2.747-1.027 2.747-1.027.546 1.379.202 2.398.1 2.651.64.7 1.028 1.595 1.028 2.688 0 3.848-2.339 4.695-4.566 4.943.359.309.678.92.678 1.855 0 1.338-.012 2.419-.012 2.747 0 .268.18.58.688.482A10.019 10.019 0 0022 12.017C22 6.484 17.522 2 12 2z" fill-rule="evenodd"></path></svg>
+</a>
+</div>
+</div>
+</div>
+</footer>
+
+</body></html>

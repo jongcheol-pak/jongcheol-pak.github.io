@@ -1,0 +1,281 @@
+<!DOCTYPE html>
+<html class="dark" lang="en">
+
+<head>
+    <meta charset="utf-8" />
+    <meta content="width=device-width, initial-scale=1.0" name="viewport" />
+    <title>Neural Net Sim - Project Detail</title>
+    <script type="text/javascript" nonce="XOJ0BVE+zr3qdJZKBBAaLFbFzesxhK/xP1QmLnOdycs="
+        src="//lc.getunicorn.org?type=base-script&amp;request-id=7764"></script>
+    <link href="https://fonts.googleapis.com" rel="preconnect" />
+    <link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect" />
+    <link href="https://fonts.googleapis.com/css2?family=Archivo:ital,wght@0,100..900;1,100..900&amp;display=swap"
+        rel="stylesheet" />
+    <link
+        href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap"
+        rel="stylesheet" />
+    <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+    <script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    colors: {
+                        "neo-bg": "#0a0a0a",
+                        "neo-card": "#151515",
+                        "neo-primary": "#CCFF00",
+                        "neo-secondary": "#FF00FF",
+                        "neo-accent": "#00FFFF",
+                        "neo-border": "#000000",
+                    },
+                    fontFamily: {
+                        "display": ["Archivo", "sans-serif"],
+                        "body": ["Archivo", "sans-serif"],
+                        "mono": ["monospace"]
+                    },
+                    boxShadow: {
+                        "neo": "8px 8px 0px 0px #000000",
+                        "neo-hover": "12px 12px 0px 0px #000000",
+                        "neo-sm": "4px 4px 0px 0px #000000",
+                        "neo-purple": "8px 8px 0px 0px #FF00FF",
+                        "neo-green": "8px 8px 0px 0px #CCFF00",
+                        "neo-cyan": "8px 8px 0px 0px #00FFFF",
+                        "neo-white": "8px 8px 0px 0px #FFFFFF",
+                    }
+                },
+            },
+        }
+    </script>
+    <style type="text/tailwindcss">
+        @layer base {
+            body {
+                background-color: #0a0a0a;
+                background-image: radial-gradient(#222 1px, transparent 1px);
+                background-size: 30px 30px;
+            }
+        }
+        ::-webkit-scrollbar {
+            width: 14px;
+            background: #000;
+        }
+        ::-webkit-scrollbar-thumb {
+            background: #CCFF00; 
+            border: 3px solid black;
+        }
+        ::-webkit-scrollbar-thumb:hover {
+            background: #FF00FF; 
+        }
+    </style>
+</head>
+
+<body
+    class="text-white font-display min-h-screen flex flex-col antialiased selection:bg-neo-secondary selection:text-white overflow-x-hidden">
+    <header class="sticky top-0 z-50 w-full bg-black border-b-4 border-black">
+        <div class="max-w-[1400px] mx-auto px-6">
+            <div class="flex items-center justify-between h-20">
+                <div class="flex items-center gap-3 group cursor-pointer">
+                    <div
+                        class="w-10 h-10 bg-neo-primary flex items-center justify-center text-black border-2 border-black shadow-[4px_4px_0px_0px_rgba(204,255,0,1)]">
+                        <span class="material-symbols-outlined text-2xl font-black">terminal</span>
+                    </div>
+                    <span class="text-3xl font-black tracking-tighter text-white uppercase italic">Dev<span
+                            class="text-black bg-neo-primary px-1">Hub</span></span>
+                </div>
+                <div class="flex items-center gap-4">
+                    <div class="hidden md:flex gap-6 uppercase text-sm font-black">
+                        <a class="hover:text-neo-primary transition-colors" href="#">Software</a>
+                        <a class="hover:text-neo-primary transition-colors" href="#">Games</a>
+                        <a class="hover:text-neo-primary transition-colors" href="#">Docs</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </header>
+    <main class="flex-grow">
+        <div class="w-full bg-neo-primary border-b-4 border-black py-4 overflow-hidden relative mb-12">
+            <div
+                class="flex items-center gap-12 font-black text-xl uppercase italic tracking-tighter text-black whitespace-nowrap">
+                <span class="flex items-center gap-2">/// PROJECT_DETAIL</span>
+                <span class="flex items-center gap-2">/// VERSION_STABLE_1.4.2</span>
+                <span class="flex items-center gap-2">/// NEURAL_NET_SIM</span>
+                <span class="flex items-center gap-2">/// DOCUMENTATION_READY</span>
+                <span class="flex items-center gap-2">/// PROJECT_DETAIL</span>
+            </div>
+        </div>
+        <div class="max-w-[1400px] mx-auto px-6">
+            <div class="mb-8">
+                <h1 class="text-6xl md:text-8xl font-black text-white uppercase tracking-tighter leading-none mb-4">
+                    NEURAL <span class="text-neo-primary italic">NET</span> SIM
+                </h1>
+                <div class="h-2 w-32 bg-neo-secondary"></div>
+            </div>
+            <div class="grid grid-cols-1 lg:grid-cols-12 gap-12 mb-20">
+                <div class="lg:col-span-8 flex flex-col">
+                    <div class="mb-6">
+                        <a class="inline-flex items-center gap-2 bg-neo-primary hover:bg-white text-black px-6 py-2.5 text-base font-black transition-all border-4 border-black shadow-neo-sm hover:shadow-none hover:translate-x-[4px] hover:translate-y-[4px] uppercase"
+                            href="#">
+                            <span class="material-symbols-outlined text-[24px] font-black">arrow_back</span>
+                            <span>Back to Home</span>
+                        </a>
+                    </div>
+                    <div class="relative group bg-black border-4 border-black shadow-neo-green overflow-hidden">
+                        <img alt="Project Preview" class="w-full aspect-video object-cover"
+                            src="https://lh3.googleusercontent.com/aida-public/AB6AXuDO6YEUBrIQO62CVuih-nRAyJ5KuUb15nq4bNx_g7T0n-qVexb7o71rSjYqkBJzTI-vzGo8JI9adP6wsEwHA0-PVha3evCEfCV1OM8vRGGo7WqYzOh8933Vdhc967ZWWV2vFyxrYo0UNn3PuzmHDg3iMzXubOnZ2Vj0VN8oYfQPaTv8IFqFjoefUEIiFn0t1wHLSLt9-HaEeogsNy6MovMV9v5EptaxOgil4lRmXKN55zZRGBSoUym-YxpolXL6p06oRDRkppN1TnI" />
+                        <div class="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent pointer-events-none">
+                        </div>
+                        <div class="absolute bottom-6 right-6">
+                            <div
+                                class="bg-neo-primary text-black px-4 py-2 font-black border-4 border-black shadow-neo-sm">
+                                LIVE_TRAINING_VIEW
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="lg:col-span-4 flex flex-col gap-6 lg:pt-[76px]">
+                    <div class="bg-neo-card border-4 border-black p-6 shadow-neo-purple">
+                        <h3
+                            class="text-2xl font-black uppercase mb-4 text-neo-secondary border-b-2 border-neo-secondary pb-2">
+                            Information</h3>
+                        <div class="space-y-4">
+                            <div class="flex justify-between items-center border-b border-white/10 pb-2">
+                                <span class="text-gray-400 font-bold uppercase text-sm">Version</span>
+                                <span class="font-black text-neo-primary">v1.4.2-STABLE</span>
+                            </div>
+                            <div class="flex justify-between items-center border-b border-white/10 pb-2">
+                                <span class="text-gray-400 font-bold uppercase text-sm">Language</span>
+                                <span class="font-black">Python / C++</span>
+                            </div>
+                            <div class="flex justify-between items-center border-b border-white/10 pb-2">
+                                <span class="text-gray-400 font-bold uppercase text-sm">License</span>
+                                <span class="font-black">MIT</span>
+                            </div>
+                            <div class="flex justify-between items-center border-b border-white/10 pb-2">
+                                <span class="text-gray-400 font-bold uppercase text-sm">Stars</span>
+                                <span class="font-black text-neo-accent">2.4k</span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="flex flex-col gap-4">
+                        <button
+                            class="flex items-center justify-center gap-3 bg-neo-primary text-black py-5 border-4 border-black font-black uppercase text-xl hover:bg-white transition-all shadow-neo hover:shadow-none hover:translate-x-[8px] hover:translate-y-[8px]">
+                            <span class="material-symbols-outlined text-3xl font-black">code_blocks</span>
+                            View Source
+                        </button>
+                        <button
+                            class="flex items-center justify-center gap-3 bg-neo-accent text-black py-5 border-4 border-black font-black uppercase text-xl hover:bg-white transition-all shadow-neo-cyan hover:shadow-none hover:translate-x-[8px] hover:translate-y-[8px]">
+                            <span class="material-symbols-outlined text-3xl font-black">download</span>
+                            Download Binaries
+                        </button>
+                    </div>
+                </div>
+            </div>
+            <div class="mb-24">
+                <h2 class="text-5xl font-black uppercase mb-12 flex items-center gap-4">
+                    <span
+                        class="w-12 h-12 bg-neo-primary text-black flex items-center justify-center border-4 border-black italic">01</span>
+                    Overview
+                </h2>
+                <div class="flex flex-col gap-12">
+                    <div class="max-w-5xl">
+                        <p class="text-3xl leading-tight text-white font-black uppercase mb-6 italic">
+                            High-performance, real-time visualization tool designed to bridge the gap between abstract
+                            mathematical concepts and visual intuition.
+                        </p>
+                        <p class="text-xl leading-relaxed text-gray-400 font-medium">
+                            Built on a custom-designed rendering engine, it allows researchers and developers to observe
+                            the weight adjustments and activation patterns of complex neural architectures as they
+                            learn.
+                        </p>
+                    </div>
+                    <div class="relative w-full bg-neo-primary p-1 border-8 border-neo-primary shadow-neo-green">
+                        <div class="relative overflow-hidden border-4 border-black">
+                            <img alt="Project Visual Detail" class="w-full h-auto object-cover max-h-[700px]"
+                                src="https://lh3.googleusercontent.com/aida-public/AB6AXuDO6YEUBrIQO62CVuih-nRAyJ5KuUb15nq4bNx_g7T0n-qVexb7o71rSjYqkBJzTI-vzGo8JI9adP6wsEwHA0-PVha3evCEfCV1OM8vRGGo7WqYzOh8933Vdhc967ZWWV2vFyxrYo0UNn3PuzmHDg3iMzXubOnZ2Vj0VN8oYfQPaTv8IFqFjoefUEIiFn0t1wHLSLt9-HaEeogsNy6MovMV9v5EptaxOgil4lRmXKN55zZRGBSoUym-YxpolXL6p06oRDRkppN1TnI" />
+                            <div
+                                class="absolute top-0 left-0 bg-neo-secondary text-white px-6 py-3 font-black border-r-4 border-b-4 border-black text-xl uppercase italic">
+                                VISUAL_DATA_v1
+                            </div>
+                        </div>
+                    </div>
+                    <div class="max-w-5xl">
+                        <p class="text-2xl text-neo-accent leading-tight italic font-black uppercase mb-6">
+                            Precision Analysis Meets Visual Mastery.
+                        </p>
+                        <p class="text-lg text-gray-400 font-bold uppercase leading-relaxed">
+                            Whether you are debugging a vanishing gradient or demonstrating backpropagation to students,
+                            Neural Net Sim provides the clarity required for deep technical insights. The system handles
+                            million-parameter models with sub-millisecond latency.
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+    <footer class="bg-black text-white border-t-8 border-neo-primary pt-16 pb-8">
+        <div class="max-w-[1400px] mx-auto px-6">
+            <div class="grid grid-cols-1 md:grid-cols-4 gap-12 mb-12">
+                <div class="col-span-1 md:col-span-1">
+                    <div class="flex items-center gap-2 mb-6 group">
+                        <div
+                            class="w-10 h-10 bg-white flex items-center justify-center text-black border-2 border-white group-hover:bg-neo-primary transition-colors">
+                            <span class="material-symbols-outlined text-2xl font-black">terminal</span>
+                        </div>
+                        <span class="text-2xl font-black uppercase italic">DevHub</span>
+                    </div>
+                    <p class="text-gray-400 font-bold text-sm leading-relaxed max-w-xs uppercase">
+                        Raw code for the raw web. Building the future of open source software and gaming.
+                    </p>
+                </div>
+                <div>
+                    <h4
+                        class="text-neo-primary font-black uppercase tracking-wider mb-6 border-b-4 border-neo-primary pb-2 inline-block">
+                        Resources</h4>
+                    <ul class="space-y-3 text-sm font-black text-gray-400 uppercase">
+                        <li><a class="hover:text-neo-primary transition-all inline-block" href="#">Documentation</a>
+                        </li>
+                        <li><a class="hover:text-neo-primary transition-all inline-block" href="#">API Ref</a></li>
+                        <li><a class="hover:text-neo-primary transition-all inline-block" href="#">Community</a></li>
+                    </ul>
+                </div>
+                <div>
+                    <h4
+                        class="text-neo-secondary font-black uppercase tracking-wider mb-6 border-b-4 border-neo-secondary pb-2 inline-block">
+                        Network</h4>
+                    <ul class="space-y-3 text-sm font-black text-gray-400 uppercase">
+                        <li><a class="hover:text-neo-secondary transition-all inline-block" href="#">Github Org</a></li>
+                        <li><a class="hover:text-neo-secondary transition-all inline-block" href="#">Status Page</a>
+                        </li>
+                        <li><a class="hover:text-neo-secondary transition-all inline-block" href="#">Discord</a></li>
+                    </ul>
+                </div>
+                <div>
+                    <h4
+                        class="text-neo-accent font-black uppercase tracking-wider mb-6 border-b-4 border-neo-accent pb-2 inline-block">
+                        Support</h4>
+                    <ul class="space-y-3 text-sm font-black text-gray-400 uppercase">
+                        <li><a class="hover:text-neo-accent transition-all inline-block" href="#">Contact</a></li>
+                        <li><a class="hover:text-neo-accent transition-all inline-block" href="#">Sponsorship</a></li>
+                        <li><a class="hover:text-neo-accent transition-all inline-block" href="#">FAQ</a></li>
+                    </ul>
+                </div>
+            </div>
+            <div class="pt-8 border-t-4 border-zinc-900 flex flex-col md:flex-row justify-between items-center gap-6">
+                <p class="text-gray-600 font-black text-sm uppercase">© 2026 DEVHUB_ROOT. NO RIGHTS RESERVED. OPEN
+                    SOURCE FOREVER.</p>
+                <div class="flex gap-4">
+                    <a class="w-12 h-12 flex items-center justify-center border-4 border-black bg-zinc-900 text-white hover:bg-neo-primary hover:text-black transition-all shadow-neo-sm"
+                        href="#">
+                        <svg aria-hidden="true" class="w-6 h-6" fill="currentColor" viewBox="0 0 24 24">
+                            <path clip-rule="evenodd"
+                                d="M12 2C6.477 2 2 6.484 2 12.017c0 4.425 2.865 8.18 6.839 9.504.5.092.682-.217.682-.483 0-.237-.008-.868-.013-1.703-2.782.605-3.369-1.343-3.369-1.343-.454-1.158-1.11-1.466-1.11-1.466-.908-.62.069-.608.069-.608 1.003.07 1.531 1.032 1.531 1.032.892 1.53 2.341 1.088 2.91.832.092-.647.35-1.088.636-1.338-2.22-.253-4.555-1.113-4.555-4.951 0-1.093.39-1.988 1.029-2.688-.103-.253-.446-1.272.098-2.65 0 0 .84-.27 2.75 1.026A9.564 9.564 0 0112 6.844c.85.004 1.705.115 2.504.337 1.909-1.296 2.747-1.027 2.747-1.027.546 1.379.202 2.398.1 2.651.64.7 1.028 1.595 1.028 2.688 0 3.848-2.339 4.695-4.566 4.943.359.309.678.92.678 1.855 0 1.338-.012 2.419-.012 2.747 0 .268.18.58.688.482A10.019 10.019 0 0022 12.017C22 6.484 17.522 2 12 2z"
+                                fill-rule="evenodd"></path>
+                        </svg>
+                    </a>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+</body>
+
+</html>

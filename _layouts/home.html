@@ -1,0 +1,97 @@
+---
+layout: default
+---
+
+
+
+<div class="container">
+
+    <!-- Header Image -->
+    <div style="text-align: center; margin-bottom: 64px;">
+        <img src="{{ '/assets/img/retro_dev_cave.png' | relative_url }}" alt="Retro Dev Cave"
+            style="max-width: 100%; height: auto; border: 4px solid black; box-shadow: 8px 8px 0px 0px var(--neo-secondary);">
+    </div>
+
+    <!-- Hero / Intro Section -->
+    <section class="hero">
+        <div class="hero-main">
+            <div>
+                <h1 class="hero-title">
+                    PROJECT <span class="hero-highlight">CORE</span>
+                </h1>
+
+            </div>
+            <div>
+                <!-- Simulated Carousel Badge or Status -->
+                <div class="hero-badge">
+                    TOTAL: {{ site.projects.size }} PROJECTS
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Programs Section -->
+    <section id="programs" class="grid-section category-program">
+        <div class="grid">
+            {% assign programs = site.projects | where: "category", "program" %}
+            {% for project in programs %}
+            {% unless project.hidden %}
+            <article class="card">
+                <div class="card-image">
+                    {% if project.image %}
+                    <img src="{{ project.image | relative_url }}" alt="{{ project.title }}">
+                    {% endif %}
+                    <div class="card-badge" style="background: var(--neo-accent);">APP</div>
+                </div>
+                <div class="card-content">
+                    <h3 class="card-title">{{ project.title }}</h3>
+                    <p class="card-desc">{{ project.description }}</p>
+
+                    <div class="card-actions">
+                        <a href="{{ project.link | default: '#' }}" class="neo-button btn-repo">
+                            <span class="material-symbols-outlined">terminal</span> Download
+                        </a>
+                        <a href="{{ project.url | relative_url }}" class="neo-button">
+                            <span class="material-symbols-outlined">description</span> DOCS
+                        </a>
+                    </div>
+                </div>
+            </article>
+            {% endunless %}
+            {% endfor %}
+        </div>
+    </section>
+
+    <!-- Games Section -->
+    <section id="games" class="grid-section category-game">
+        <div class="grid">
+            {% assign games = site.projects | where: "category", "game" %}
+            {% for project in games %}
+            {% unless project.hidden %}
+            <article class="card">
+                <div class="card-image">
+                    {% if project.image %}
+                    <img src="{{ project.image | relative_url }}" alt="{{ project.title }}">
+                    {% endif %}
+                    <div class="card-badge">GAME</div>
+                </div>
+                <div class="card-content">
+                    <h3 class="card-title">{{ project.title }}</h3>
+                    <p class="card-desc">{{ project.description }}</p>
+
+                    <div class="card-actions">
+                        <a href="{{ project.link | default: '#' }}" class="neo-button btn-repo">
+                            <span class="material-symbols-outlined">joystick</span> Download
+                        </a>
+                        <a href="{{ project.url | relative_url }}" class="neo-button">
+                            <span class="material-symbols-outlined">description</span> INFO
+                        </a>
+                    </div>
+                </div>
+            </article>
+            {% endunless %}
+            {% endfor %}
+        </div>
+    </section>
+
+</div>
