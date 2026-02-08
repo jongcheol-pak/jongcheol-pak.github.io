@@ -6,7 +6,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>{{ page.title }} | {{ site.title }}</title>
     <meta name="description" content="{{ site.description }}">
-    <link rel="stylesheet" href="{{ "/assets/css/style.css" | relative_url }}">
+    <link rel="stylesheet" href="{{ " /assets/css/style.css" | relative_url }}">
     <!-- Fonts included in style.css import -->
 </head>
 
@@ -14,7 +14,7 @@
 
     <header class="site-header" style="background: {{ page.header_bg | default: 'var(--neo-primary)' }};">
         <div class="container header-inner">
-            <a href="{{ "/" | relative_url }}" class="logo-group">
+            <a href="{{ " /" | relative_url }}" class="logo-group">
                 <div class="logo-icon"
                     style="background: {{ page.logo_bg | default: 'black' }}; color: {{ page.logo_text | default: 'white' }}; box-shadow: 4px 4px 0px 0px {{ page.logo_shadow | default: 'white' }};">
                     <span class="material-symbols-outlined">terminal</span>
@@ -23,9 +23,13 @@
             </a>
 
             <nav class="nav-links">
-                <a href="{{ "/#games" | relative_url }}" class="nav-link">GAMES</a>
-                <a href="{{ "/#programs" | relative_url }}" class="nav-link">APPS</a>
-                <a href="{{ "/admin.html" | relative_url }}" class="nav-link">ADMIN</a>
+                <a href="{{ " /#games" | relative_url }}" class="nav-link">GAMES</a>
+                <a href="{{ " /#programs" | relative_url }}" class="nav-link">APPS</a>
+                <script>
+                    if (window.location.hostname === 'localhost' || window.location.hostname === '127.0.0.1') {
+                        document.write('<a href="{{ "/admin.html" | relative_url }}" class="nav-link">ADMIN</a>');
+                    }
+                </script>
             </nav>
 
             <button class="neo-button hidden-sm">
