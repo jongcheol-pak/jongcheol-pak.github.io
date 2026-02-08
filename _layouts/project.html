@@ -24,7 +24,7 @@ logo_shadow: "var(--neo-primary)"
         <!-- Left: Image & Preview -->
         <div>
             <div style="margin-bottom: 24px;">
-                <a href="{{ " /" | relative_url }}" class="neo-button" style="text-transform: uppercase;">
+                <a href="{{ "/" | relative_url }}" class="neo-button" style="text-transform: uppercase;">
                     <span class="material-symbols-outlined">arrow_back</span> Back to Home
                 </a>
             </div>
@@ -89,8 +89,7 @@ logo_shadow: "var(--neo-primary)"
                         // Actually, Jekyll's page.path gives the source path (e.g. _projects/foo.md)
                         // We can just pass it directly.
                         const sourcePath = "{{ page.path }}".replace(/\\/g, '/');
-                        // sourcePath is like "_projects/2026-02-07-retro.md"
-                        // we need just the basename for the API
+                        // sourcePath is like "_projects/2026-02-07-retro.md"// we need just the basename for the API
                         const filename = sourcePath.split('/').pop();
 
                         document.write(`
