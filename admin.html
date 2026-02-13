@@ -15,17 +15,17 @@ title: 프로젝트 생성기
 
             <div>
                 <label
-                    style="font-weight: 900; display: block; margin-bottom: 8px; color: var(--neo-primary); cursor: pointer;">
+                    style="font-weight: 400; display: block; margin-bottom: 8px; color: var(--neo-primary); cursor: pointer;">
                     <input type="checkbox" id="p-hidden" style="width: 16px; height: 16px;"> 목록 숨김 (HIDE FROM LIST)
                 </label>
-                <label style="font-weight: 900; display: block; margin-bottom: 8px; color: var(--neo-primary);">프로젝트 ID
+                <label style="font-weight: 400; display: block; margin-bottom: 8px; color: var(--neo-primary);">프로젝트 ID
                     (URL SLUG)</label>
                 <input type="text" id="p-slug" class="neo-input" placeholder="예: super-mario-clone (영문, 숫자, 하이픈만 가능)">
                 <p style="color: gray; font-size: 0.8rem; margin-top: 4px;">* 이 ID는 이미지 폴더명과 파일명으로 사용됩니다.</p>
             </div>
 
             <div>
-                <label style="font-weight: 900; display: block; margin-bottom: 8px; color: var(--neo-primary);">프로젝트 제목
+                <label style="font-weight: 400; display: block; margin-bottom: 8px; color: var(--neo-primary);">프로젝트 제목
                     (TITLE)</label>
                 <input type="text" id="p-title" class="neo-input" placeholder="예: 슈퍼 마리오 클론" oninput="autoFillSlug()">
             </div>
@@ -33,19 +33,19 @@ title: 프로젝트 생성기
 
 
             <div>
-                <label style="font-weight: 900; display: block; margin-bottom: 8px; color: var(--neo-primary);">설명
+                <label style="font-weight: 400; display: block; margin-bottom: 8px; color: var(--neo-primary);">설명
                     (DESCRIPTION)</label>
                 <input type="text" id="p-desc" class="neo-input" placeholder="프로젝트에 대한 간단한 설명을 입력하세요">
             </div>
 
             <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 24px;">
                 <div>
-                    <label style="font-weight: 900; display: block; margin-bottom: 8px; color: var(--neo-primary);">버전
+                    <label style="font-weight: 400; display: block; margin-bottom: 8px; color: var(--neo-primary);">버전
                         (VERSION)</label>
                     <input type="text" id="p-version" class="neo-input" placeholder="v1.0">
                 </div>
                 <div>
-                    <label style="font-weight: 900; display: block; margin-bottom: 8px; color: var(--neo-primary);">플랫폼
+                    <label style="font-weight: 400; display: block; margin-bottom: 8px; color: var(--neo-primary);">플랫폼
                         (PLATFORM)</label>
                     <select id="p-platform" class="neo-input" style="color: white; background:black;">
                         <option value="Windows">Windows</option>
@@ -62,7 +62,7 @@ title: 프로젝트 생성기
             </div>
 
             <div>
-                <label style="font-weight: 900; display: block; margin-bottom: 8px; color: var(--neo-primary);">카테고리
+                <label style="font-weight: 400; display: block; margin-bottom: 8px; color: var(--neo-primary);">카테고리
                     (CATEGORY)</label>
                 <select id="p-category" class="neo-input" style="color: white; background:black;">
                     <option value="game">게임 (GAME)</option>
@@ -71,7 +71,7 @@ title: 프로젝트 생성기
             </div>
 
             <div>
-                <label style="font-weight: 900; display: block; margin-bottom: 8px; color: var(--neo-primary);">이미지
+                <label style="font-weight: 400; display: block; margin-bottom: 8px; color: var(--neo-primary);">이미지
                     (VISUAL ASSETS)</label>
                 <div
                     style="background: black; padding: 16px; border: 4px solid var(--neo-primary); margin-bottom: 16px;">
@@ -90,20 +90,20 @@ title: 프로젝트 생성기
                     <p style="color: gray; font-size: 0.8rem; margin-top: 8px;">* API 서버가 켜져 있어야 합니다. 업로드 시 아래 URL 영역에
                         자동 추가됩니다.</p>
                 </div>
-                <label style="font-weight: 900; display: block; margin-bottom: 8px; color: var(--neo-primary);">이미지 URL
+                <label style="font-weight: 400; display: block; margin-bottom: 8px; color: var(--neo-primary);">이미지 URL
                     목록</label>
                 <textarea id="p-images" class="neo-input" rows="3"
                     placeholder="https://... 또는 /assets/img/..."></textarea>
             </div>
 
             <div>
-                <label style="font-weight: 900; display: block; margin-bottom: 8px; color: var(--neo-primary);">링크
+                <label style="font-weight: 400; display: block; margin-bottom: 8px; color: var(--neo-primary);">링크
                     (ACCESS LINK)</label>
                 <input type="text" id="p-link" class="neo-input" placeholder="https://github.com/...">
             </div>
 
             <div>
-                <label style="font-weight: 900; display: block; margin-bottom: 8px; color: var(--neo-primary);">Github
+                <label style="font-weight: 400; display: block; margin-bottom: 8px; color: var(--neo-primary);">Github
                     코드
                     (SOURCE URL) (선택)</label>
                 <input type="text" id="p-github-url" class="neo-input"
@@ -111,7 +111,7 @@ title: 프로젝트 생성기
             </div>
 
             <div>
-                <label style="font-weight: 900; display: block; margin-bottom: 8px; color: var(--neo-primary);">상세 내용
+                <label style="font-weight: 400; display: block; margin-bottom: 8px; color: var(--neo-primary);">상세 내용
                     (MARKDOWN)</label>
                 <textarea id="p-content" class="neo-input" rows="6" placeholder="마크다운 형식으로 상세 내용을 작성하세요..."></textarea>
             </div>

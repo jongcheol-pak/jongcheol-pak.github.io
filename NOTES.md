@@ -1,3 +1,20 @@
+## [2026-02-13] - Style Refinements (Font Weights)
+### 변경사항:
+- **`assets/css/style.css`**:
+  - H6 폰트 두께 변경 (900 -> 400)
+  - `.card-desc` 폰트 두께 변경 (700 -> 300)
+  - Footer 타이틀 및 링크 폰트 두께 조정 (900 -> 700/600)
+  - Copyright 폰트 두께 조정 (900 -> 700)
+- **`_layouts/project.html`**:
+  - `admin.html` 링크 관련 공백 수정
+  - 메타데이터 라벨 및 값 폰트 두께 조정 (700/900 -> 500)
+  - 설명 텍스트 폰트 두께 조정 (900 -> 400)
+- **`admin.html`**:
+  - 입력 폼 라벨 폰트 두께 조정 (900 -> 400)
+
+### 메모:
+- 전반적으로 폰트 두께를 줄여 가독성 및 디자인 밸런스 조정
+
 ## [2026-02-11] - Fixing Path Issues & Adding Favicon
 ### 변경사항:
 - **`assets/favicon`**: 파비콘 이미지들을 이 경로로 이동

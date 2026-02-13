@@ -84,7 +84,7 @@ h5,
 h6 {
     font-family: 'DNFBitBitv2', sans-serif;
     text-transform: uppercase;
-    font-weight: 900;
+    font-weight: 400;
     /* Black weight */
     margin-bottom: 0.5rem;
     line-height: 1;
@@ -390,7 +390,7 @@ a {
 .card-desc {
     color: #9ca3af;
     /* text-gray-400 */
-    font-weight: 700;
+    font-weight: 300;
     font-size: 1.125rem;
     margin-bottom: 32px;
     flex-grow: 1;
@@ -439,13 +439,13 @@ a {
 
 .footer-title {
     font-size: 1.5rem;
-    font-weight: 900;
+    font-weight: 700;
     font-style: italic;
 }
 
 .footer-desc {
     color: #9ca3af;
-    font-weight: 700;
+    font-weight: 600;
     font-size: 0.875rem;
     max-width: 300px;
     text-transform: uppercase;
@@ -453,7 +453,7 @@ a {
 
 .footer-col h4 {
     color: var(--neo-primary);
-    font-weight: 900;
+    font-weight: 700;
     letter-spacing: 0.05em;
     border-bottom: 4px solid var(--neo-primary);
     padding-bottom: 8px;
@@ -468,7 +468,7 @@ a {
 
 .footer-col li a {
     color: #9ca3af;
-    font-weight: 900;
+    font-weight: 600;
     font-size: 0.875rem;
     text-transform: uppercase;
     display: block;
@@ -494,7 +494,7 @@ a {
 .copyright {
     color: #52525b;
     /* gray-600 */
-    font-weight: 900;
+    font-weight: 700;
     font-size: 0.875rem;
     text-transform: uppercase;
 }
