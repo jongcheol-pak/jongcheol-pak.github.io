@@ -4,14 +4,13 @@ title: "메일 알림"
 description: "POP3 메일 서버를 주기적으로 확인하고 새 메일이 발견되면 Windows 알림을 표시하는 트레이 상주 앱입니다."
 version: "v1.0"
 platform: "Windows"
-date: 2026-02-08
+date: 2026-02-18
 category: program
 image: "/assets/img/projects/mailtraynotifier/image_1.png"
 images:
-  - "/assets/img/projects/mailtraynotifier/image_1.png"
   - "/assets/img/projects/mailtraynotifier/image_2.png"
   - "/assets/img/projects/mailtraynotifier/image_3.png"
-link: "https://github.com/jongcheol-pak/MailTrayNotifier"
+link: "https://github.com/jongcheol-pak/MailTrayNotifier/releases"
 github_url: "https://github.com/jongcheol-pak/MailTrayNotifier"
 ---
 
