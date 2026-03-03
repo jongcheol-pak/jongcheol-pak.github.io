@@ -59,8 +59,8 @@ class RequestHandler(http.server.SimpleHTTPRequestHandler):
             # Case 1: Image Upload
             if "image_data" in data and "filename" in data:
                 filename = data["filename"]
-                image_data = data["filename"] # Using filename for logging
-                b64_string = data["image_data"].split(',')[1] if ',' in data["image_data"] else data["image_data"]
+                image_data = data["image_data"]
+                b64_string = image_data.split(',')[1] if ',' in image_data else image_data
                 
                 # Determine target directory
                 if "project_slug" in data and data["project_slug"]:

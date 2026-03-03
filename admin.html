@@ -457,7 +457,7 @@ ${content}
     }
 
     async function uploadImages() {
-        // ... (existing uploadImages logic)
+        const fileInput = document.getElementById('p-image-upload');
         const files = fileInput.files;
         if (files.length === 0) { alert("파일을 선택해주세요."); return; }
 
