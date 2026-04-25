@@ -2,6 +2,10 @@
 
 ## 최근 변경
 
+- 2026-04-26: **Phase 1 (A-3) 롤백 — archived / fork 숨기기 토글 기능 제거**. 사용자 요청으로 같은 날 추가된 토글을 모두 되돌리고 archived/fork 카드도 항상 표시되는 기존 동작으로 복귀. 변경: `FilterBar.astro` 토글 마크업 / `global.css` `.filter-toggle` 스타일 / `filter.ts` 토글 변수·조건·이벤트·URL 쿼리(`hideArchived`, `hideFork`) 동기화 / `ko.json`·`en.json` `filter_hide_archived`·`filter_hide_fork` 키 모두 삭제. 검증: `MOCK_REPOS=1 npm run build` 성공, `dist/index.html` 에 토글 흔적 0건, src 전수 검색에서 잔존 참조 없음. `README.md` 의 "숨기기 토글" 라인도 함께 제거.
+
+- 2026-04-26: **Phase 1 (A-3) — archived / fork 숨기기 토글 추가**. `FilterBar.astro` 에 토글 2개 + i18n 키(`filter_hide_archived`, `filter_hide_fork`) 추가, `filter.ts` `applyFilters` 에 토글 조건 추가, `restoreFromQuery`/`syncQuery` 에 `?hideArchived=1`/`?hideFork=1` 동기화 추가, `global.css` 에 `.filter-toggle` 스타일(기존 `--emerald` / `--bg-surface` / `--bg-elevated` 토큰만 재사용). 토글 기본값 OFF, 카드 0건이어도 자동 비활성/숨김 처리 안 함(plan v3 §2 A-3 범위 제한). 검증: `MOCK_REPOS=1 npm run build` 성공, `dist/index.html` 에 두 토글 마크업 정상 렌더 확인. **2026-04-26 추가 요청으로 같은 날 롤백됨 (위 항목 참조).**
+
 - 2026-04-25: `RepoDetailData` 확장 — `updatedAt/archived/fork` 3필드 추가 (`types.ts`). `data.ts` `getRepoDetail` 에서 채워 반환. `[repo].astro` 에서 `fetchPublicRepos` + `repoMap` 구성, `repo` prop 전달, `repo` 기준 메타 재구성(`updatedAt/archived/fork` fallback) 로직 제거. 공개 타입 *추가*만 있으므로 기존 호출자 호환. DetailHeader prop 시그니처는 그대로 유지(스코프 내 변경 최소화).
 
 - 2026-04-25: 코드리뷰(/simplify) 반영 — 버그 2건 + 중복 제거/경량화 7건.
