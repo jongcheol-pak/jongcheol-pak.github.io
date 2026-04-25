@@ -1,0 +1,37 @@
+{
+  "name": "jongcheol-pak-homepage",
+  "version": "0.1.0",
+  "private": true,
+  "type": "module",
+  "description": "jongcheol-pak GitHub 계정의 public 저장소를 Neo-Brutalist 카드 대시보드로 보여주는 Astro 정적 사이트",
+  "homepage": "https://jongcheol-pak.github.io/",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/jongcheol-pak/jongcheol-pak.github.io.git"
+  },
+  "license": "MIT",
+  "scripts": {
+    "dev": "astro dev",
+    "start": "astro dev",
+    "prebuild": "node scripts/ensure-mock-stub.js",
+    "build": "astro build",
+    "preview": "astro preview",
+    "astro": "astro"
+  },
+  "dependencies": {
+    "@astrojs/sitemap": "^3.7.2",
+    "@astrojs/tailwind": "^6.0.2",
+    "astro": "^5.14.0",
+    "marked": "^15.0.12",
+    "sanitize-html": "^2.17.3",
+    "tailwindcss": "^3.4.17"
+  },
+  "devDependencies": {
+    "@fontsource/noto-sans-kr": "^5.2.9",
+    "@resvg/resvg-js": "^2.6.2",
+    "@types/sanitize-html": "^2.16.1",
+    "satori": "^0.26.0",
+    "satori-html": "^0.3.2",
+    "typescript": "^5.9.3"
+  }
+}

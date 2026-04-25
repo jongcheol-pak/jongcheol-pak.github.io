@@ -1,0 +1,81 @@
+---
+// Top AppBar — Emerald Cybernetic
+// - variant="default" : 메인 페이지 (로고 + 검색 + 언어)
+// - variant="detail"  : 상세 페이지 (← Back + 로고 + 언어)
+import { withBase } from '../lib/paths';
+
+interface Props {
+  variant?: 'default' | 'detail';
+}
+const { variant = 'default' } = Astro.props;
+const homeHref = withBase('/');
+---
+
+<header class:list={['site-header', variant === 'detail' && 'detail']}>
+  <div class="header-inner">
+    {variant === 'detail' ? (
+      <!-- 좌: Back 버튼 -->
+      <div class="flex items-center justify-start">
+        <a href={homeHref} class="back-button" aria-label="홈으로" data-i18n-arialabel="back">
+          <span class="material-symbols-outlined" aria-hidden="true">arrow_back</span>
+          <span data-i18n="back">홈으로</span>
+        </a>
+      </div>
+    ) : (
+      <!-- 좌: 로고 -->
+      <div class="flex items-center justify-start">
+        <a href={homeHref} class="logo-text" aria-label="P-J-C home">P-J-C</a>
+      </div>
+    )}
+
+    <!-- 중앙: 메인은 검색창, 상세는 로고 -->
+    {variant === 'detail' ? (
+      <div class="flex items-center justify-center">
+        <a href={homeHref} class="logo-text" aria-label="Project Hub home">Project Hub</a>
+      </div>
+    ) : (
+      <div class="flex items-center justify-center">
+        <div class="header-search">
+          <span class="material-symbols-outlined search-icon" aria-hidden="true">search</span>
+          <input
+            type="search"
+            id="search-input"
+            placeholder="SEARCH INFRASTRUCTURE..."
+            data-i18n-placeholder="search_placeholder"
+            aria-label="저장소 검색"
+            data-i18n-arialabel="search_aria_label"
+            autocomplete="off"
+          />
+        </div>
+      </div>
+    )}
+
+    <!-- 우: 언어 드롭다운 -->
+    <div class="flex items-center justify-end">
+      <div class="lang-switcher">
+        <button
+          id="lang-trigger"
+          type="button"
+          class="lang-trigger"
+          aria-haspopup="menu"
+          aria-expanded="false"
+          aria-controls="lang-menu"
+          aria-label="언어 변경"
+          data-i18n-arialabel="language"
+        >
+          <span class="material-symbols-outlined lang-icon" aria-hidden="true">language</span>
+          <span id="lang-current-label">한국어</span>
+          <span class="material-symbols-outlined lang-caret" aria-hidden="true">expand_more</span>
+        </button>
+        <ul id="lang-menu" class="lang-menu" role="menu" aria-label="언어 선택">
+          <li role="none">
+            <button type="button" role="menuitem" data-set-lang="ko">한국어</button>
+          </li>
+          <li role="none">
+            <button type="button" role="menuitem" data-set-lang="en">English</button>
+          </li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</header>

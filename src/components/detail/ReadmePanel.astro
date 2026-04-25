@@ -1,0 +1,17 @@
+---
+// 왼쪽 README 카드 — sanitize 된 HTML 주입 (prose-emerald)
+interface Props {
+  html: string;
+}
+const { html } = Astro.props;
+---
+
+<section class="readme-card">
+  <div class="readme-card-head">
+    <div class="head-left">
+      <span class="material-symbols-outlined" aria-hidden="true">description</span>
+      <span class="head-title" data-i18n="readme_heading">README.md</span>
+    </div>
+  </div>
+  <div class="readme-card-body prose-emerald" set:html={html}></div>
+</section>

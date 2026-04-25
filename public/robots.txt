@@ -1,0 +1,4 @@
+User-agent: *
+Allow: /
+
+Sitemap: https://jongcheol-pak.github.io/sitemap-index.xml

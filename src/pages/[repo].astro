@@ -1,0 +1,115 @@
+---
+// 저장소 상세 페이지 (동적 라우트) — Emerald Cybernetic
+// URL: /{repo-name}/
+import Layout from '../layouts/Layout.astro';
+import Header from '../components/Header.astro';
+import DetailHeader from '../components/detail/DetailHeader.astro';
+import ReadmePanel from '../components/detail/ReadmePanel.astro';
+import ReleasesCard from '../components/detail/ReleasesCard.astro';
+import ActionButtons from '../components/detail/ActionButtons.astro';
+import { getDetailRouteList, getRepoDetail } from '../lib/data';
+
+export async function getStaticPaths() {
+  const list = await getDetailRouteList();
+  const entries = await Promise.all(
+    list.map(async (item) => {
+      const detail = await getRepoDetail(item.name);
+      if (!detail) return null;
+      return { params: { repo: item.name }, props: { detail } };
+    }),
+  );
+  return entries.filter((e): e is NonNullable<typeof e> => e !== null);
+}
+
+const { detail } = Astro.props as {
+  detail: NonNullable<Awaited<ReturnType<typeof getRepoDetail>>>;
+};
+
+const pageTitle = `${detail.name} — Project Hub`;
+const ogImagePath = `/og/${detail.name}.png`;
+---
+
+<Layout
+  title={pageTitle}
+  description={detail.description ?? undefined}
+  ogImagePath={ogImagePath}
+>
+  <Header variant="detail" />
+
+  <main id="main" class="page-main">
+    <DetailHeader
+      repoName={detail.name}
+      description={detail.description}
+      updatedAt={detail.updatedAt}
+      releases={detail.releases}
+      archived={detail.archived}
+      fork={detail.fork}
+    />
+
+    <div class="detail-grid">
+      <!-- 왼쪽: README -->
+      <div class="detail-left">
+        <ReadmePanel html={detail.readmeHtml} />
+      </div>
+
+      <!-- 오른쪽: Releases + 액션 버튼 -->
+      <div class="detail-right">
+        <div class="sticky-wrap">
+          <ReleasesCard releases={detail.releases} repoUrl={detail.url} />
+          <ActionButtons downloadUrl={detail.downloadUrl} repoUrl={detail.url} />
+        </div>
+      </div>
+    </div>
+  </main>
+
+  <!-- Back to Top -->
+  <button
+    id="back-to-top"
+    type="button"
+    class="back-to-top"
+    aria-label="맨 위로"
+    data-i18n-arialabel="back_to_top"
+  >
+    <span class="material-symbols-outlined" aria-hidden="true">keyboard_arrow_up</span>
+  </button>
+
+  <script is:inline>
+    (function () {
+      var btn = document.getElementById('back-to-top');
+      if (!btn) return;
+      var update = function () {
+        if (window.scrollY > 300) btn.classList.add('visible');
+        else btn.classList.remove('visible');
+      };
+      window.addEventListener('scroll', update, { passive: true });
+      btn.addEventListener('click', function () {
+        window.scrollTo({ top: 0, behavior: 'smooth' });
+      });
+      update();
+    })();
+  </script>
+
+  <style>
+    .detail-grid {
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: 24px;
+    }
+    @media (min-width: 1024px) {
+      .detail-grid {
+        grid-template-columns: 2fr 1fr;
+      }
+    }
+    .detail-right .sticky-wrap {
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+    }
+    @media (min-width: 1024px) {
+      .detail-right .sticky-wrap {
+        position: sticky;
+        top: calc(var(--header-height) + 24px);
+      }
+    }
+  </style>
+</Layout>

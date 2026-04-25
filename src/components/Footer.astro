@@ -1,0 +1,29 @@
+---
+// 사이트 푸터 — 좌: 저작권 / 우: GitHub 링크
+import GithubIcon from './GithubIcon.astro';
+const year = new Date().getFullYear();
+const githubUrl = 'https://github.com/jongcheol-pak';
+---
+
+<footer class="site-footer">
+  <div class="footer-inner">
+    <p
+      class="copyright"
+      data-i18n-tpl="copyright"
+      data-i18n-var-year={String(year)}
+    >
+      © {year} jongcheol-pak. All rights reserved.
+    </p>
+
+    <a
+      class="footer-github"
+      href={githubUrl}
+      target="_blank"
+      rel="noopener noreferrer"
+      aria-label="GitHub — jongcheol-pak"
+    >
+      <GithubIcon />
+      <span>GitHub</span>
+    </a>
+  </div>
+</footer>

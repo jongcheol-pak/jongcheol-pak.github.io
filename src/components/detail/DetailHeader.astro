@@ -1,0 +1,54 @@
+---
+// 상세 페이지 프로젝트 헤더 (Emerald Cybernetic)
+// - 좌: 상태 pulse 배지 + 버전 라벨 + 타이틀 + 설명
+// - 우: Last Updated
+// - 공통 Header 는 [repo].astro 에서 variant="detail" 로 별도 렌더링
+import type { GitHubRelease } from '../../lib/types';
+import { formatRelative } from '../../i18n/dictionary';
+
+interface Props {
+  repoName: string;
+  description?: string | null;
+  updatedAt: string;
+  releases: GitHubRelease[];
+  archived: boolean;
+  fork: boolean;
+}
+const { repoName, description, updatedAt, releases, archived, fork } = Astro.props;
+
+// 상태 분류: archived → ARCHIVED / prerelease → BETA / stable release → STABLE / fork → FORK / else → ACTIVE
+type StatusKind = 'archived' | 'fork' | 'beta' | 'stable' | 'active';
+function deriveStatus(): { kind: StatusKind; label: string; i18nKey: string } {
+  if (archived) return { kind: 'archived', label: 'ARCHIVED', i18nKey: 'badge_archived' };
+  if (releases[0]?.prerelease) return { kind: 'beta', label: 'BETA', i18nKey: 'badge_beta' };
+  if (releases.length > 0) return { kind: 'stable', label: 'STABLE', i18nKey: 'badge_stable' };
+  if (fork) return { kind: 'fork', label: 'FORK', i18nKey: 'badge_fork' };
+  return { kind: 'active', label: 'ACTIVE', i18nKey: 'badge_active' };
+}
+const status = deriveStatus();
+
+// 버전 라벨: 최신 release tag + "_LATEST" 접미사
+const versionLabel = releases[0]?.tag_name ? `${releases[0].tag_name}_LATEST` : null;
+
+// 빌드 타임에는 한국어로 렌더, 클라이언트에서 data-iso 를 언어에 맞게 재포맷
+const fmtKo = (iso: string): string => formatRelative(iso, 'ko');
+---
+
+<section class="detail-header">
+  <div>
+    <div class="flex items-center" style="gap: 12px; margin-bottom: 8px; flex-wrap: wrap;">
+      <span class:list={['status-pill', status.kind]}>
+        <span class="dot" aria-hidden="true"></span>
+        <span data-i18n={status.i18nKey}>{status.label}</span>
+      </span>
+      {versionLabel && <span class="version-label">{versionLabel}</span>}
+    </div>
+    <h1 class="detail-title">{repoName}</h1>
+    {description && <p class="detail-subtitle">{description}</p>}
+  </div>
+
+  <div style="text-align: left;" class="md:text-right">
+    <p class="last-updated-label" data-i18n="last_updated_label">Last Updated</p>
+    <p class="last-updated-value" data-iso={updatedAt}>{fmtKo(updatedAt)}</p>
+  </div>
+</section>

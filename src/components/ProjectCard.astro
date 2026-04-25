@@ -1,0 +1,84 @@
+---
+// 저장소 카드 (Bento 스타일, Emerald Cybernetic)
+// - 이미지 상단 (h-48) + 설명 + 칩 2개 (topics[0], topics[1]) + Updated 상대시간
+// - 좌상단 북마크 별, 우상단 archived/fork 배지
+// - data-* 속성은 src/scripts/filter.ts 가 검색/필터/정렬에 사용 (유지)
+import type { RepoCardData } from '../lib/types';
+import { withBase } from '../lib/paths';
+
+interface Props {
+  card: RepoCardData;
+}
+const { card } = Astro.props;
+
+// 카드 썸네일: README 첫 이미지 → 폴백 Thumbnail.jpg
+const thumb = card.imageUrl ?? withBase('/Thumbnail.jpg');
+const detailHref = withBase(`/${card.name}/`);
+
+// 검색 대상은 모두 lowercase 로 미리 정규화 (filter.ts 가 일관성 유지)
+const dataName = card.name.toLowerCase();
+const dataDescription = (card.description ?? card.summary ?? '').toLowerCase();
+const dataTopics = card.topics.join(',');
+
+// 칩 1 / 칩 2 — topics[0], topics[1] 을 uppercase 로
+const chip1 = card.topics[0]?.toUpperCase() ?? null;
+const chip2 = card.topics[1]?.toUpperCase() ?? null;
+---
+
+<article
+  class="card repo-card"
+  data-name={dataName}
+  data-description={dataDescription}
+  data-topics={dataTopics}
+  data-stars={String(card.stars)}
+  data-updated={card.updatedAt}
+  data-created={card.createdAt}
+  data-archived={card.archived ? '1' : '0'}
+  data-fork={card.fork ? '1' : '0'}
+>
+  <div class="card-image">
+    <a href={detailHref} aria-label={`${card.name} 상세 페이지`}>
+      <img src={thumb} alt={`${card.name} 썸네일`} loading="lazy" />
+    </a>
+
+    <!-- 북마크 버튼 (좌상단) -->
+    <button
+      type="button"
+      class="bookmark-btn"
+      data-repo-name={dataName}
+      aria-pressed="false"
+      aria-label="북마크 추가"
+      data-i18n-arialabel="bookmark_add"
+    >
+      <span class="material-symbols-outlined" aria-hidden="true">star</span>
+    </button>
+
+    <!-- archived / fork 배지 (우상단) -->
+    {card.archived && (
+      <div class="card-badge-secondary" data-i18n="badge_archived">ARCHIVED</div>
+    )}
+    {!card.archived && card.fork && (
+      <div class="card-badge-secondary" data-i18n="badge_fork">FORK</div>
+    )}
+  </div>
+
+  <div class="card-content">
+    <h3 class="card-title">
+      <a href={detailHref}>{card.name}</a>
+    </h3>
+
+    {(card.description || card.summary) && (
+      <p class="card-desc">{card.description ?? card.summary}</p>
+    )}
+
+    <div class="card-chips">
+      {chip1 && <span class="card-chip">{chip1}</span>}
+      {chip2 && <span class="card-chip alt">{chip2}</span>}
+    </div>
+
+    <span class="card-updated">
+      <span data-i18n="card_updated_prefix">Updated:</span>
+      &nbsp;<span data-iso={card.updatedAt}>{card.updatedAt}</span>
+    </span>
+  </div>
+</article>

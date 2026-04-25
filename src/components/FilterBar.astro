@@ -1,0 +1,51 @@
+---
+// 필터 바 — Topic 다중 선택 드롭다운 + 결과 카운트
+// (정렬은 DashboardHero 로 이동했음)
+interface Props {
+  topics: string[];
+}
+const { topics } = Astro.props;
+---
+
+<div class="filter-bar" id="topic-filter-root">
+  {topics.length > 0 && (
+    <div class="topic-dropdown" id="topic-filter">
+      <label class="filter-label" for="topic-filter-toggle" data-i18n="label_topic">Topic</label>
+      <button
+        type="button"
+        id="topic-filter-toggle"
+        class="topic-trigger"
+        aria-haspopup="listbox"
+        aria-expanded="false"
+        aria-controls="topic-filter-panel"
+      >
+        <span id="topic-filter-label" data-i18n="topic_multi_placeholder">전체 Topic</span>
+        <span class="material-symbols-outlined" aria-hidden="true">expand_more</span>
+      </button>
+      <div
+        id="topic-filter-panel"
+        class="topic-menu"
+        role="listbox"
+        aria-multiselectable="true"
+      >
+        {topics.map((t) => (
+          <label>
+            <input type="checkbox" class="topic-checkbox" value={t} />
+            <span>{t}</span>
+          </label>
+        ))}
+        <div style="border-top: 1px solid var(--bg-elevated); margin-top: 8px; padding-top: 8px; text-align: right;">
+          <button
+            type="button"
+            id="topic-filter-clear"
+            class="topic-trigger"
+            style="font-size: 11px; padding: 4px 10px;"
+            data-i18n="topic_clear"
+          >
+            초기화
+          </button>
+        </div>
+      </div>
+    </div>
+  )}
+</div>

@@ -1,0 +1,36 @@
+---
+// 상세 페이지 액션 버튼 (Emerald Cybernetic)
+// - 다운로드 (primary): downloadUrl 있을 때만
+// - GitHub  (secondary): 항상 표시
+// - Releases 카드 하단 2-col 그리드 형태
+import GithubIcon from '../GithubIcon.astro';
+interface Props {
+  downloadUrl: string | null;
+  repoUrl: string;
+}
+const { downloadUrl, repoUrl } = Astro.props;
+const hasDownload = !!downloadUrl;
+---
+
+<div class:list={['action-buttons', !hasDownload && 'single']}>
+  {hasDownload && (
+    <a
+      href={downloadUrl}
+      target="_blank"
+      rel="noopener noreferrer"
+      class="action-btn primary"
+    >
+      <span class="material-symbols-outlined" aria-hidden="true" style="font-size: 16px;">download</span>
+      <span data-i18n="btn_download">Download</span>
+    </a>
+  )}
+  <a
+    href={repoUrl}
+    target="_blank"
+    rel="noopener noreferrer"
+    class="action-btn secondary"
+  >
+    <GithubIcon />
+    <span data-i18n="btn_github_repo">GitHub 저장소</span>
+  </a>
+</div>

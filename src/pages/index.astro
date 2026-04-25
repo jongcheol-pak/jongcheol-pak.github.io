@@ -1,0 +1,96 @@
+---
+// 메인 대시보드 페이지 (Emerald Cybernetic)
+// 빌드 타임에 GitHub에서 jongcheol-pak public 저장소 + README 페칭하여 카드 렌더링
+import Layout from '../layouts/Layout.astro';
+import Header from '../components/Header.astro';
+import DashboardHero from '../components/DashboardHero.astro';
+import InsightsPanel from '../components/InsightsPanel.astro';
+import FilterBar from '../components/FilterBar.astro';
+import ProjectCard from '../components/ProjectCard.astro';
+import {
+  getAllRepoCards,
+  collectTopics,
+  collectInsights,
+  getOwnerProfile,
+} from '../lib/data';
+
+// 빌드 타임 데이터 페칭
+const cards = await getAllRepoCards();
+const topics = collectTopics(cards);
+const insights = await collectInsights(cards);
+const owner = getOwnerProfile();
+---
+
+<Layout>
+  <Header variant="default" />
+
+  <main id="main" class="page-main">
+    <DashboardHero owner={owner} />
+
+    <InsightsPanel insights={insights} />
+
+    <!-- 컨트롤 바: 좌측 Topic 필터 + 우측 정렬 -->
+    <div class="sort-bar">
+      <FilterBar topics={topics} />
+
+      <div class="hero-sort">
+        <span class="hero-sort-label" data-i18n="sort_by">SORT BY</span>
+        <div class="emerald-select-wrap">
+          <select
+            id="sort-order"
+            class="emerald-select"
+            aria-label="정렬"
+            data-i18n-arialabel="label_sort"
+          >
+            <option value="updated" data-i18n="sort_updated">최근 업데이트순</option>
+            <option value="stars" data-i18n="sort_stars">스타 많은순</option>
+            <option value="name" data-i18n="sort_name">이름순 (A-Z)</option>
+            <option value="created" data-i18n="sort_created">최근 생성순</option>
+          </select>
+          <span class="material-symbols-outlined caret" aria-hidden="true">expand_more</span>
+        </div>
+      </div>
+    </div>
+
+    {cards.length === 0 ? (
+      <div class="card" style="padding: 48px; text-align: center;">
+        <p style="color: var(--text-muted);">
+          표시할 저장소가 없습니다. GitHub API 호출에 실패했거나 README 가 있는 public 저장소가 없을 수 있습니다.
+        </p>
+      </div>
+    ) : (
+      <>
+        <div id="card-grid" class="grid">
+          {cards.map((card) => <ProjectCard card={card} />)}
+        </div>
+
+        <!-- 페이지네이션 (저장소 12개 초과 시 filter.ts 가 노출) -->
+        <nav
+          id="pagination"
+          class="pagination hidden"
+          aria-label="페이지 네비게이션"
+        >
+          <button
+            id="page-prev"
+            type="button"
+            data-i18n="pagination_prev"
+            aria-label="이전 페이지"
+            data-i18n-arialabel="pagination_prev_aria"
+          >이전</button>
+          <span id="page-info" class="page-info" aria-live="polite"></span>
+          <button
+            id="page-next"
+            type="button"
+            data-i18n="pagination_next"
+            aria-label="다음 페이지"
+            data-i18n-arialabel="pagination_next_aria"
+          >다음</button>
+        </nav>
+      </>
+    )}
+  </main>
+
+  <script>
+    import '../scripts/filter.ts';
+  </script>
+</Layout>

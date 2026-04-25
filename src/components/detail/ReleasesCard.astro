@@ -1,0 +1,100 @@
+---
+// 오른쪽 Releases 카드 — 타임라인 스타일 (Emerald Cybernetic)
+// - 최신 1개: latest 노드(에메랄드) + tag + Latest 배지
+// - 과거 N개: 회색 노드
+// - "View all releases" 링크 버튼
+// - 하단 Download / GitHub 2-col 액션 버튼 (ActionButtons 는 별도 컴포넌트로 분리)
+
+import type { GitHubRelease } from '../../lib/types';
+import { formatRelative } from '../../i18n/dictionary';
+
+interface Props {
+  releases: GitHubRelease[];
+  repoUrl: string;
+}
+const { releases, repoUrl } = Astro.props;
+
+// 타임라인: 최신 1 + 과거 최대 3건까지 노출 (총 4건). 그 외는 "View all releases" 버튼
+const timelineItems = releases.slice(0, 4);
+const total = releases.length;
+const releasesIndexUrl = `${repoUrl}/releases`;
+
+const fmtKo = (iso: string | null): string => (iso ? formatRelative(iso, 'ko') : '');
+
+function summarize(body: string | null, maxLen = 120): string {
+  if (!body) return '';
+  const firstParagraph = body.split(/\n\s*\n/)[0] ?? '';
+  const plain = firstParagraph.replace(/[#*_`>\-]/g, '').replace(/\s+/g, ' ').trim();
+  if (plain.length <= maxLen) return plain;
+  return `${plain.slice(0, maxLen).trimEnd()}...`;
+}
+---
+
+<section class="releases-card">
+  <div class="releases-card-head">
+    <div class="head-left">
+      <span class="material-symbols-outlined" aria-hidden="true">new_releases</span>
+      <span class="head-title" data-i18n="releases_heading">Releases</span>
+    </div>
+    {total > 0 && (
+      <span
+        class="total-badge"
+        data-i18n-tpl="releases_total"
+        data-i18n-var-count={String(total)}
+      >
+        {total} TOTAL
+      </span>
+    )}
+  </div>
+
+  <div class="releases-card-body">
+    {total === 0 ? (
+      <p style="text-align: center; color: var(--text-muted); padding: 16px 0;" data-i18n="releases_none">
+        등록된 릴리스가 없습니다
+      </p>
+    ) : (
+      <>
+        <div class="releases-timeline">
+          <div class="timeline-line" aria-hidden="true"></div>
+          <ul class="releases-timeline-list">
+          {timelineItems.map((r, idx) => {
+            const isLatest = idx === 0;
+            const dateIso = r.published_at ?? r.created_at;
+            const summary = summarize(r.body);
+            return (
+              <li class:list={[isLatest && 'latest']}>
+                <div class="node" aria-hidden="true"></div>
+                <div class="release-row-head">
+                  <h5 class="tag">
+                    {r.tag_name}
+                    {isLatest && (
+                      <span class="latest-label" data-i18n="releases_latest_badge">Latest</span>
+                    )}
+                  </h5>
+                  <span class="date" data-iso={dateIso}>{fmtKo(dateIso)}</span>
+                </div>
+                {summary && <p class="release-notes">{summary}</p>}
+                {r.prerelease && (
+                  <div class="release-tags">
+                    <span class="release-tag-chip">PRERELEASE</span>
+                  </div>
+                )}
+              </li>
+            );
+          })}
+          </ul>
+        </div>
+
+        <a
+          href={releasesIndexUrl}
+          class="release-view-all"
+          target="_blank"
+          rel="noopener noreferrer"
+          data-i18n="releases_view_all"
+        >
+          View all releases
+        </a>
+      </>
+    )}
+  </div>
+</section>

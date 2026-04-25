@@ -1,3 +1,24 @@
+# Astro / Node
+node_modules/
+dist/
+.astro/
+.env
+.env.*
+!.env.example
+
+# Logs
+*.log
+npm-debug.log*
+
+# OS
+.DS_Store
+Thumbs.db
+
+# 작업용 (로컬 전용)
+notes.md
+plan.md
+
+# Legacy Jekyll (이관 완료 후 제거 예정)
 _site
 .sass-cache
 .jekyll-metadata

@@ -1,0 +1,36 @@
+---
+// 404 Not Found 페이지 (Emerald Cybernetic)
+import Layout from '../layouts/Layout.astro';
+import Header from '../components/Header.astro';
+import { withBase } from '../lib/paths';
+
+const homeHref = withBase('/');
+const pageTitle = '404 SIGNAL_LOST | P-J-C';
+const pageDescription = '요청하신 페이지를 찾을 수 없습니다.';
+---
+
+<Layout title={pageTitle} description={pageDescription}>
+  <Header variant="default" />
+
+  <main id="main" class="page-404">
+    <div class="code" aria-hidden="true">404</div>
+
+    <div style="display:inline-flex; align-items:center; gap:8px;" class="status-pill active">
+      <span class="dot" aria-hidden="true"></span>
+      <span>SIGNAL_LOST</span>
+    </div>
+
+    <h1 class="title" style="margin-top: 24px;" data-i18n="notfound_title">
+      페이지를 찾을 수 없습니다
+    </h1>
+
+    <p class="desc" data-i18n="notfound_desc">
+      요청하신 프로젝트 페이지가 존재하지 않거나, 이름이 변경되었을 수 있습니다.
+    </p>
+
+    <a href={homeHref} class="action-btn primary" style="margin-top: 16px; min-width: 220px;">
+      <span class="material-symbols-outlined" aria-hidden="true" style="font-size: 18px;">home</span>
+      <span data-i18n="notfound_back">대시보드로 돌아가기</span>
+    </a>
+  </main>
+</Layout>

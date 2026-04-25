@@ -1,0 +1,41 @@
+---
+// Developer Insights Panel — 4개 메트릭 (ACTIVE_PROJECTS / OPEN_ISSUES / SYSTEM_UPTIME / LAST_DEPLOY)
+import type { WorkspaceInsights } from '../lib/types';
+
+interface Props {
+  insights: WorkspaceInsights;
+}
+const { insights } = Astro.props;
+---
+
+<section class="insights-panel" aria-label="Workspace insights">
+  <div class="insight-item">
+    <span class="insight-label" data-i18n="insight_active_projects">ACTIVE_PROJECTS</span>
+    <span class="insight-value">{insights.activeProjects}</span>
+  </div>
+
+  <div class="insight-divider" aria-hidden="true"></div>
+
+  <div class="insight-item">
+    <span class="insight-label" data-i18n="insight_open_issues">OPEN_ISSUES</span>
+    <span class:list={['insight-value', insights.openIssues > 0 && 'error']}>{insights.openIssues}</span>
+  </div>
+
+  <div class="insight-divider" aria-hidden="true"></div>
+
+  <div class="insight-item">
+    <span class="insight-label" data-i18n="insight_system_uptime">SYSTEM_UPTIME</span>
+    <span class="insight-value">{insights.uptime}</span>
+  </div>
+
+  <div class="insight-divider" aria-hidden="true"></div>
+
+  <div class="insight-item">
+    <span class="insight-label" data-i18n="insight_last_deploy">LAST_DEPLOY</span>
+    {insights.lastDeployAt ? (
+      <span class="insight-value" data-iso={insights.lastDeployAt}>{insights.lastDeployAt}</span>
+    ) : (
+      <span class="insight-value">—</span>
+    )}
+  </div>
+</section>

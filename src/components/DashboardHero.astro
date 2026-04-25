@@ -1,0 +1,31 @@
+---
+// Workspace Dashboard 히어로 — 아바타 + 타이틀 + 서브텍스트 + 정렬 드롭다운
+import type { OwnerProfile } from '../lib/types';
+
+interface Props {
+  owner: OwnerProfile;
+}
+const { owner } = Astro.props;
+---
+
+<section class="hero">
+  <div class="hero-left">
+    <div class="hero-avatar">
+      <div class="avatar-glow" aria-hidden="true"></div>
+      <img
+        src={owner.avatarUrl}
+        alt={`${owner.login} avatar`}
+        width="128"
+        height="128"
+        loading="eager"
+        decoding="async"
+      />
+    </div>
+    <div class="flex flex-col">
+      <h2 class="hero-title" data-i18n="hero_title">Workspace Dashboard</h2>
+      <p class="hero-subtitle" data-i18n="hero_subtitle">
+        GitHub 저장소를 한눈에 살펴보는 개인 대시보드입니다. 실시간으로 프로젝트 현황과 배포 지표를 모니터링합니다.
+      </p>
+    </div>
+  </div>
+</section>

@@ -1,0 +1,113 @@
+---
+// 공통 레이아웃: 폰트 로드 + 전역 스타일 + 메타 태그
+// - Emerald Cybernetic 테마
+// - Open Graph / Twitter 카드 포함 (슬랙·카카오톡 등 공유 미리보기용)
+import '../styles/global.css';
+import Footer from '../components/Footer.astro';
+import { absoluteUrl, withBase } from '../lib/paths';
+
+interface Props {
+  title?: string;
+  description?: string;
+  /** 상세 페이지 등에서 저장소별 동적 OG 이미지 경로 주입용. base path 제외한 "/og/foo.png" */
+  ogImagePath?: string;
+}
+
+const {
+  title = 'Project Hub',
+  description = 'jongcheol-pak 의 GitHub 저장소 대시보드 — Emerald Cybernetic 톤의 프로젝트 카드 쇼케이스',
+  ogImagePath,
+} = Astro.props;
+
+const absoluteOgImage = absoluteUrl(Astro.site, ogImagePath ?? '/Thumbnail.jpg');
+const faviconSvgHref = withBase('/favicon.svg');
+const faviconIcoHref = withBase('/favicon.ico');
+const favicon96Href = withBase('/favicon-96x96.png');
+const appleTouchHref = withBase('/apple-touch-icon.png');
+const manifestHref = withBase('/site.webmanifest');
+const rssHref = withBase('/rss.xml');
+
+// 현재 페이지 절대 URL — trailing slash 일관성 유지
+const rawPathname = Astro.url.pathname;
+const normalizedPathname = rawPathname.endsWith('/') ? rawPathname : `${rawPathname}/`;
+const canonicalUrl = Astro.site
+  ? new URL(normalizedPathname, Astro.site).toString()
+  : Astro.url.toString();
+---
+
+<!DOCTYPE html>
+<html lang="ko" class="dark">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+    <!-- 언어 사전 세팅 (플래시 최소화) -->
+    <script is:inline>
+      (function () {
+        try {
+          var stored = localStorage.getItem('lang');
+          if (stored === 'ko' || stored === 'en') {
+            document.documentElement.lang = stored;
+            return;
+          }
+        } catch (e) { /* noop */ }
+        var nav = (navigator.language || 'ko').toLowerCase();
+        document.documentElement.lang = nav.indexOf('en') === 0 ? 'en' : 'ko';
+      })();
+    </script>
+
+    <title>{title}</title>
+    <meta name="description" content={description} />
+    <meta
+      name="keywords"
+      content="P-J-C, jongcheol-pak, GitHub, 프로젝트, Workspace, Dashboard, Emerald Cybernetic"
+    />
+
+    <!-- 파비콘 세트 (RealFaviconGenerator 구성) -->
+    <link rel="icon" type="image/svg+xml" href={faviconSvgHref} />
+    <link rel="icon" type="image/x-icon" href={faviconIcoHref} />
+    <link rel="icon" type="image/png" sizes="96x96" href={favicon96Href} />
+    <link rel="apple-touch-icon" sizes="180x180" href={appleTouchHref} />
+    <link rel="manifest" href={manifestHref} />
+    <meta name="theme-color" content="#00FF9D" />
+
+    <link rel="canonical" href={canonicalUrl} />
+
+    <link
+      rel="alternate"
+      type="application/rss+xml"
+      title="P-J-C — Releases"
+      href={rssHref}
+    />
+
+    <meta property="og:type" content="website" />
+    <meta property="og:site_name" content="P-J-C" />
+    <meta property="og:title" content={title} />
+    <meta property="og:description" content={description} />
+    <meta property="og:url" content={canonicalUrl} />
+    <meta property="og:image" content={absoluteOgImage} />
+
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:title" content={title} />
+    <meta name="twitter:description" content={description} />
+    <meta name="twitter:image" content={absoluteOgImage} />
+  </head>
+  <body>
+    <a href="#main" class="skip-link" data-i18n="a11y_skip_to_main">본문 바로가기</a>
+
+    <slot />
+    <Footer />
+
+    <!-- 전역 토스트 (북마크 후 카드가 다른 페이지로 이동했을 때 등 일시 안내) -->
+    <div
+      id="global-toast"
+      role="status"
+      aria-live="polite"
+      class="global-toast opacity-0 translate-y-2"
+    ></div>
+
+    <script>
+      import '../scripts/i18n.ts';
+    </script>
+  </body>
+</html>
