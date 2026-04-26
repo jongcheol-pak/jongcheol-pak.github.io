@@ -102,10 +102,20 @@ const chip2 = topic2?.toUpperCase() ?? null;
         <span data-i18n="card_updated_prefix">Updated:</span>
         &nbsp;<span data-iso={card.updatedAt}>{card.updatedAt}</span>
       </span>
-      {card.openIssues > 0 && (
-        <span class="card-open-issues">
-          <span data-i18n="open_issues_label">OPEN ISSUES</span>
-          <span class="card-open-issues-num">{card.openIssues}</span>
+      {(card.stars > 0 || card.openIssues > 0) && (
+        <span class="card-meta-right">
+          {card.stars > 0 && (
+            <span class="card-stars" aria-label={`${card.stars} stars`}>
+              <Icon name="star_filled" />
+              <span class="card-stars-num">{card.stars}</span>
+            </span>
+          )}
+          {card.openIssues > 0 && (
+            <span class="card-open-issues">
+              <span data-i18n="open_issues_label">OPEN ISSUES</span>
+              <span class="card-open-issues-num">{card.openIssues}</span>
+            </span>
+          )}
         </span>
       )}
     </div>

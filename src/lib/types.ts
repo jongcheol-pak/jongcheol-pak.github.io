@@ -88,6 +88,8 @@ export interface RepoDetailData {
   recentCommits?: number[];
   // 상세 헤더 우측 표시용. 0 도 항상 표시 (단일 저장소 dashboard 정보 일관성)
   openIssues: number;
+  // 상세 헤더 상태 줄 표시용. 0 인 경우는 마크업 미렌더 (시각 노이즈 회피)
+  stars: number;
 }
 
 // 저장소별 커스텀 오버라이드 (repo-overrides.json)

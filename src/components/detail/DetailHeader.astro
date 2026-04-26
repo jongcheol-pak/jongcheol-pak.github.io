@@ -5,6 +5,7 @@
 // - 공통 Header 는 [repo].astro 에서 variant="detail" 로 별도 렌더링
 import type { GitHubRelease } from '../../lib/types';
 import { formatRelative } from '../../i18n/dictionary';
+import Icon from '../Icon.astro';
 
 interface Props {
   repoName: string;
@@ -14,10 +15,13 @@ interface Props {
   archived: boolean;
   fork: boolean;
   openIssues: number;
+  // stars 0 인 저장소는 stargazers 링크 미렌더 (카드 표시 정책과 일관)
+  stars: number;
   repoUrl: string;
 }
-const { repoName, description, updatedAt, releases, archived, fork, openIssues, repoUrl } = Astro.props;
+const { repoName, description, updatedAt, releases, archived, fork, openIssues, stars, repoUrl } = Astro.props;
 const issuesUrl = `${repoUrl}/issues`;
+const stargazersUrl = `${repoUrl}/stargazers`;
 
 // 상태 분류: archived → ARCHIVED / prerelease → BETA / stable release → STABLE / fork → FORK / else → ACTIVE
 type StatusKind = 'archived' | 'fork' | 'beta' | 'stable' | 'active';
@@ -45,6 +49,19 @@ const fmtKo = (iso: string): string => formatRelative(iso, 'ko');
         <span data-i18n={status.i18nKey}>{status.label}</span>
       </span>
       {versionLabel && <span class="version-label">{versionLabel}</span>}
+      {stars > 0 && (
+        <a
+          href={stargazersUrl}
+          target="_blank"
+          rel="noopener noreferrer"
+          class="detail-stars"
+          aria-label={`${stars} stargazers on GitHub`}
+        >
+          <Icon name="star_filled" />
+          <span data-i18n="stars_label">STARS</span>
+          <span class="detail-stars-num">{stars}</span>
+        </a>
+      )}
       <a
         href={issuesUrl}
         target="_blank"

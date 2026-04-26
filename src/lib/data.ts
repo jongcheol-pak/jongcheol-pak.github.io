@@ -283,5 +283,6 @@ export async function getRepoDetail(repoName: string): Promise<RepoDetailData | 
     fork: repo.fork,
     recentCommits: recentCommits ?? undefined,
     openIssues: repo.open_issues_count ?? 0,
+    stars: repo.stargazers_count,
   };
 }

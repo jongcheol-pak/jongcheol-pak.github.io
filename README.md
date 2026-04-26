@@ -37,6 +37,7 @@ _Lighthouse 점수 자동 갱신: 2026-04-26 (UTC)_
 - **필터**: Topic **다중 선택 (AND 조합)** — 여러 topic 을 체크하면 **모두 포함한** 카드만 남음
 - **카드 chip 클릭 필터 토글**: 카드의 Topic chip 을 클릭하면 해당 topic 이 Topic 다중 필터에 토글 추가/해제됨. 현재 선택된 topic 의 chip 은 강조 표시 (`aria-pressed='true'`)
 - **카드 오픈 이슈 카운터**: 카드 푸터 우측에 `N OPEN ISSUES` 라벨 (숫자만 에메랄드 강조). `open_issues_count == 0` 인 카드는 미렌더 — 노이즈 회피
+- **카드 stars 카운터**: 카드 푸터 우측 (오픈 이슈 좌측) 에 `★ N` 표시 (별 아이콘 + 숫자 모두 에메랄드). `stargazers_count == 0` 인 카드는 미렌더 — 노이즈 회피. stars + openIssues 둘 다 0 이면 우측 메타 영역 자체 미렌더
 - **정렬**: 최근 업데이트순 / 스타순 / 이름순 / 생성일순 (4가지, Hero 우측 드롭다운)
 - **URL 공유**: 현재 검색/필터/정렬/페이지 상태가 URL 쿼리(`?q=&topic=&sort=&page=`)에 자동 반영
 - **페이지네이션**: 저장소 수가 12개를 초과하면 자동으로 페이지 네비게이션이 노출
@@ -45,7 +46,7 @@ _Lighthouse 점수 자동 갱신: 2026-04-26 (UTC)_
 ### 상세 페이지 (저장소별)
 - **URL 형식**: `/{repo-name}/`
 - **Top AppBar**: `← Back` + 중앙 `P-J-C` 로고 + 우 언어 드롭다운 (sticky)
-- **Project Header**: 상태 pulse 배지(`STABLE` / `BETA` / `ARCHIVED` / `FORK` / `ACTIVE`) + 최신 release tag(`vX.Y.Z_LATEST`) + **OPEN ISSUES 카운터(클릭 시 GitHub 이슈 페이지 새 탭)** + 타이틀 + 설명 + `Last Updated` 상대 시간
+- **Project Header**: 상태 pulse 배지(`STABLE` / `BETA` / `ARCHIVED` / `FORK` / `ACTIVE`) + 최신 release tag(`vX.Y.Z_LATEST`) + **STARS 카운터(클릭 시 GitHub stargazers 페이지 새 탭, `stargazers_count == 0` 인 저장소는 미렌더)** + **OPEN ISSUES 카운터(클릭 시 GitHub 이슈 페이지 새 탭)** + 타이틀 + 설명 + `Last Updated` 상대 시간
 - **2열 레이아웃**: 왼쪽 README 카드(헤더바 + sanitize 된 prose-emerald 본문) + 오른쪽 최근 4주 commit sparkline + Releases 카드 + 액션 버튼
 - **README 원본 복사 버튼**: README 카드 헤더 우측 상단에 복사 아이콘. 클릭 시 원본 Markdown 을 클립보드에 복사 + 아이콘이 2초간 ✓ 로 변경 + 화면 하단 `복사됨` 토스트 (HTTPS 환경 필요 — 로컬 `http://localhost` 에서는 `navigator.clipboard` 미작동)
 - **최근 4주 commit sparkline**: 우측 상단에 GitHub `repos/{r}/commits?since=4주전` (paginated) 으로 받은 commit 들을 7일 단위 4 bucket 으로 카운트한 미니 그래프(SVG polyline + 4 노드, 노드 hover 시 `N commits` 툴팁) + 4주 합계. 0 커밋 저장소 / 404 / rate limit / 네트워크 실패 → **미렌더 폴백**

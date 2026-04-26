@@ -917,6 +917,29 @@ button.card-chip[aria-pressed='true'] {
   color: var(--emerald);
   font-weight: 600;
 }
+/* 카드 푸터 우측 메타: stars + open issues 묶음 (둘 중 하나만 있어도 우측 정렬 유지) */
+.card-meta-right {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+}
+.card-stars {
+  color: var(--text-muted);
+  font-family: 'Inter', 'Noto Sans KR', sans-serif;
+  font-size: 10px;
+  letter-spacing: 0.1em;
+  display: inline-flex;
+  align-items: center;
+  gap: 3px;
+}
+.card-stars .icon {
+  color: var(--emerald);
+  font-size: 12px;
+}
+.card-stars-num {
+  color: var(--emerald);
+  font-weight: 600;
+}
 
 /* 페이지네이션 */
 .pagination {
@@ -1079,8 +1102,9 @@ button.card-chip[aria-pressed='true'] {
     opacity: 0.5;
   }
 }
-/* 상세 헤더 OPEN ISSUES 링크 — version-label 톤과 일관, 숫자만 emerald */
-.detail-open-issues {
+/* 상세 헤더 메타 pill (OPEN ISSUES / STARS 외부 링크) — version-label 톤과 일관, 숫자만 emerald */
+.detail-open-issues,
+.detail-stars {
   display: inline-flex;
   align-items: center;
   gap: 6px;
@@ -1095,12 +1119,18 @@ button.card-chip[aria-pressed='true'] {
   border-radius: 0.25rem;
   transition: border-color 0.15s ease;
 }
-.detail-open-issues:hover {
+.detail-open-issues:hover,
+.detail-stars:hover {
   border-color: rgba(0, 255, 157, 0.45);
 }
-.detail-open-issues-num {
+.detail-open-issues-num,
+.detail-stars-num {
   color: var(--emerald);
   font-weight: 700;
+}
+.detail-stars .icon {
+  color: var(--emerald);
+  font-size: 13px;
 }
 
 .version-label {
