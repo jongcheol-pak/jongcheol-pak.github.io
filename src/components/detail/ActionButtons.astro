@@ -4,6 +4,7 @@
 // - GitHub  (secondary): 항상 표시
 // - Releases 카드 하단 2-col 그리드 형태
 import GithubIcon from '../GithubIcon.astro';
+import Icon from '../Icon.astro';
 interface Props {
   downloadUrl: string | null;
   repoUrl: string;
@@ -20,7 +21,7 @@ const hasDownload = !!downloadUrl;
       rel="noopener noreferrer"
       class="action-btn primary"
     >
-      <span class="material-symbols-outlined" aria-hidden="true" style="font-size: 16px;">download</span>
+      <Icon name="download" size="16px" />
       <span data-i18n="btn_download">Download</span>
     </a>
   )}

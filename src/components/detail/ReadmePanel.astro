@@ -1,6 +1,7 @@
 ---
 // 왼쪽 README 카드 — sanitize 된 HTML 주입 (prose-emerald)
 // 우측 상단 복사 버튼은 원본 Markdown 을 클립보드에 쓴다 (HTML 아님)
+import Icon from '../Icon.astro';
 interface Props {
   html: string;
   markdown: string;
@@ -14,7 +15,7 @@ const markdownJson = JSON.stringify(markdown).replace(/</g, '\\u003c');
 <section class="readme-card">
   <div class="readme-card-head">
     <div class="head-left">
-      <span class="material-symbols-outlined" aria-hidden="true">description</span>
+      <Icon name="description" />
       <span class="head-title" data-i18n="readme_heading">README.md</span>
     </div>
     <button
@@ -24,7 +25,8 @@ const markdownJson = JSON.stringify(markdown).replace(/</g, '\\u003c');
       aria-label="README 복사"
       data-i18n-arialabel="readme_copy"
     >
-      <span class="material-symbols-outlined" aria-hidden="true">content_copy</span>
+      <Icon name="content_copy" class="icon-copy-default" />
+      <Icon name="check" class="icon-copy-active" />
     </button>
   </div>
   <script
@@ -52,7 +54,6 @@ const markdownJson = JSON.stringify(markdown).replace(/</g, '\\u003c');
       return;
     }
 
-    const icon = btn.querySelector<HTMLElement>('.material-symbols-outlined');
     const toastEl = document.getElementById('global-toast');
     let resetTimer: ReturnType<typeof setTimeout> | null = null;
     let toastTimer: ReturnType<typeof setTimeout> | null = null;
@@ -65,11 +66,11 @@ const markdownJson = JSON.stringify(markdown).replace(/</g, '\\u003c');
         return;
       }
 
-      // 아이콘 일시 변경 (content_copy → check)
-      if (icon) icon.textContent = 'check';
+      // 아이콘 일시 변경 (content_copy → check) — CSS `.copied` 클래스로 SVG stack 토글
+      btn.classList.add('copied');
       if (resetTimer) clearTimeout(resetTimer);
       resetTimer = setTimeout(() => {
-        if (icon) icon.textContent = 'content_copy';
+        btn.classList.remove('copied');
       }, 2000);
 
       // 토스트 (filter.ts 와 동일한 #global-toast 재사용)

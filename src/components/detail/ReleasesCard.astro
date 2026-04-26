@@ -7,6 +7,7 @@
 
 import type { GitHubRelease } from '../../lib/types';
 import { formatRelative } from '../../i18n/dictionary';
+import Icon from '../Icon.astro';
 
 interface Props {
   releases: GitHubRelease[];
@@ -33,7 +34,7 @@ function summarize(body: string | null, maxLen = 120): string {
 <section class="releases-card">
   <div class="releases-card-head">
     <div class="head-left">
-      <span class="material-symbols-outlined" aria-hidden="true">new_releases</span>
+      <Icon name="new_releases" />
       <span class="head-title" data-i18n="releases_heading">Releases</span>
     </div>
     {total > 0 && (

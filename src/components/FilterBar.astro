@@ -1,6 +1,7 @@
 ---
 // 필터 바 — Topic 다중 선택 드롭다운 + 결과 카운트
 // (정렬은 DashboardHero 로 이동했음)
+import Icon from './Icon.astro';
 interface Props {
   topics: string[];
 }
@@ -20,7 +21,7 @@ const { topics } = Astro.props;
         aria-controls="topic-filter-panel"
       >
         <span id="topic-filter-label" data-i18n="topic_multi_placeholder">전체 Topic</span>
-        <span class="material-symbols-outlined" aria-hidden="true">expand_more</span>
+        <Icon name="expand_more" />
       </button>
       <div
         id="topic-filter-panel"

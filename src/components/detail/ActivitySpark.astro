@@ -2,6 +2,7 @@
 // 상세 페이지 우측 패널 — 최근 4주 주별 commit 수 미니 sparkline (B-3)
 // SVG polyline + 4개 노드. 노드 hover 시 `<title>` 로 해당 주 커밋 수 툴팁
 // 호출자에서 `weeks.some((v) => v > 0)` 가드를 거친 뒤에만 렌더한다 (0커밋 저장소 폴백)
+import Icon from '../Icon.astro';
 interface Props {
   weeks: number[]; // 길이 4, 오래된 주 → 최신 주 순서
 }
@@ -24,7 +25,7 @@ const totalCommits = weeks.reduce((a, b) => a + b, 0);
 
 <section class="activity-spark" aria-label={`Recent commits last 4 weeks: ${totalCommits}`}>
   <div class="activity-spark-head">
-    <span class="material-symbols-outlined activity-spark-icon" aria-hidden="true">timeline</span>
+    <Icon name="timeline" class="activity-spark-icon" />
     <span class="activity-spark-label" data-i18n="activity_spark_label">LAST_4_WEEKS</span>
     <span class="activity-spark-total">{totalCommits}</span>
   </div>

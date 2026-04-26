@@ -1,0 +1,63 @@
+---
+// 인라인 SVG 아이콘 — Material Symbols Outlined 24dp variant 의 path 데이터를 그대로 사용
+// (P-4: 외부 폰트 의존 제거. SVG 원본은 src/assets/icons/ 에 정적 파일로 보관 — Apache-2.0)
+//
+// - viewBox 는 Material Symbols 신 좌표계인 `0 -960 960 960` 그대로 사용
+// - 색상은 CSS `.icon { fill: currentColor }` 로 부모의 color 를 따라간다
+// - 크기는 부모 font-size 를 따른다 (1em × 1em)
+//
+// 추가 아이콘이 필요하면 src/assets/icons/<name>.svg 추가 + 아래 icons 객체에 등록
+
+import expandMore from '../assets/icons/expand_more.svg?raw';
+import star from '../assets/icons/star.svg?raw';
+import starFilled from '../assets/icons/star_filled.svg?raw';
+import arrowBack from '../assets/icons/arrow_back.svg?raw';
+import search from '../assets/icons/search.svg?raw';
+import language from '../assets/icons/language.svg?raw';
+import keyboardArrowUp from '../assets/icons/keyboard_arrow_up.svg?raw';
+import home from '../assets/icons/home.svg?raw';
+import download from '../assets/icons/download.svg?raw';
+import timeline from '../assets/icons/timeline.svg?raw';
+import description from '../assets/icons/description.svg?raw';
+import contentCopy from '../assets/icons/content_copy.svg?raw';
+import check from '../assets/icons/check.svg?raw';
+import newReleases from '../assets/icons/new_releases.svg?raw';
+
+const icons = {
+  expand_more: expandMore,
+  star,
+  star_filled: starFilled,
+  arrow_back: arrowBack,
+  search,
+  language,
+  keyboard_arrow_up: keyboardArrowUp,
+  home,
+  download,
+  timeline,
+  description,
+  content_copy: contentCopy,
+  check,
+  new_releases: newReleases,
+} as const;
+
+export type IconName = keyof typeof icons;
+
+interface Props {
+  name: IconName;
+  /** 추가 클래스 (예: `lang-icon`, `search-icon`). aria-hidden 은 자동 처리 */
+  class?: string;
+  /** 인라인 폰트 크기 — 부모 컨텍스트보다 작거나 큰 아이콘이 필요할 때만 사용 */
+  size?: string;
+}
+
+const { name, class: className, size } = Astro.props;
+const svgRaw = icons[name];
+const styleAttr = size ? `font-size: ${size}` : undefined;
+---
+
+<span
+  class:list={['icon', className]}
+  aria-hidden="true"
+  style={styleAttr}
+  set:html={svgRaw}
+/>

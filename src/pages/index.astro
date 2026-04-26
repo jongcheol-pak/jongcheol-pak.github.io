@@ -6,6 +6,7 @@ import Header from '../components/Header.astro';
 import DashboardHero from '../components/DashboardHero.astro';
 import InsightsPanel from '../components/InsightsPanel.astro';
 import FilterBar from '../components/FilterBar.astro';
+import Icon from '../components/Icon.astro';
 import ProjectCard from '../components/ProjectCard.astro';
 import {
   getAllRepoCards,
@@ -47,7 +48,7 @@ const owner = getOwnerProfile();
             <option value="name" data-i18n="sort_name">이름순 (A-Z)</option>
             <option value="created" data-i18n="sort_created">최근 생성순</option>
           </select>
-          <span class="material-symbols-outlined caret" aria-hidden="true">expand_more</span>
+          <Icon name="expand_more" class="caret" />
         </div>
       </div>
     </div>

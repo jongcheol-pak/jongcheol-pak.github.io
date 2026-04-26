@@ -105,7 +105,8 @@ _Lighthouse 점수 자동 갱신: 2026-04-26 (UTC)_
 | OG 한글 폰트 | @fontsource/noto-sans-kr | OG 이미지에서 한글 description 렌더 |
 | 언어 | TypeScript 5.x (strict) | 타입 안전성 |
 | 배포 | GitHub Pages + GitHub Actions | 정적 호스팅 + CI/CD |
-| 폰트 | Space Grotesk, Noto Sans KR, Material Symbols Outlined | 본문·헤딩·아이콘 |
+| 폰트 | Inter, Noto Sans KR (Google Fonts, head `<link>` 직접 로드 + preconnect) | 본문·헤딩 |
+| 아이콘 | Material Symbols Outlined 24dp SVG (정적, `src/assets/icons/`) — 외부 폰트 의존 제거 | 인라인 SVG (`Icon.astro`) |
 
 ---
 

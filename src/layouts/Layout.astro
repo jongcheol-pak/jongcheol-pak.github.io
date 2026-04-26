@@ -19,6 +19,20 @@ const {
   ogImagePath,
 } = Astro.props;
 
+// P-2: Hero avatar preload 는 메인 페이지(루트 `/`)에서만 적용
+// (상세/404 페이지에서는 Hero 미렌더 → preload 가 미사용 자원 경고를 유발)
+const isRootPage = Astro.url.pathname === '/' || Astro.url.pathname === '';
+const heroAvatarUrl = 'https://github.com/jongcheol-pak.png?size=256';
+
+// P-1 + P-3 + P-4: 외부 폰트 stylesheet
+// - Inter 300 / Noto Sans KR 900 (코드 미사용) 제거 (P-3)
+// - Material Symbols Outlined 패밀리 제거 — 인라인 SVG (Icon.astro) 로 교체 (P-4)
+const fontStylesheetHref =
+  'https://fonts.googleapis.com/css2' +
+  '?family=Inter:wght@400;500;600;700' +
+  '&family=Noto+Sans+KR:wght@400;500;700' +
+  '&display=swap';
+
 const absoluteOgImage = absoluteUrl(Astro.site, ogImagePath ?? '/Thumbnail.jpg');
 const faviconSvgHref = withBase('/favicon.svg');
 const faviconIcoHref = withBase('/favicon.ico');
@@ -40,6 +54,17 @@ const canonicalUrl = Astro.site
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+    <!-- P-1: 폰트 origin 사전 연결 (DNS lookup + TLS 비용 분리) -->
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <!-- P-1: 폰트 stylesheet 를 head 에서 직접 로드 (chained @import 회피) -->
+    <link rel="stylesheet" href={fontStylesheetHref} />
+
+    {isRootPage && (
+      <!-- P-2: 메인 페이지 Hero 아바타 preload — LCP 단축 (GitHub avatar 외부 도메인) -->
+      <link rel="preload" as="image" href={heroAvatarUrl} fetchpriority="high" crossorigin />
+    )}
 
     <!-- 언어 사전 세팅 (플래시 최소화) -->
     <script is:inline>

@@ -6,8 +6,7 @@
    - Borders 1px + Neon Inner-Glows (no drop-shadow)
 */
 
-/* @import 는 모든 다른 규칙보다 앞에 와야 함 (PostCSS) */
-@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Noto+Sans+KR:wght@400;500;700;900&family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@24,400,0,0&display=swap');
+/* 폰트 로드는 Layout.astro 의 head <link> 에서 처리 (P-1: chained @import 제거 → preconnect + parallel stylesheet) */
 
 @tailwind base;
 @tailwind components;
@@ -104,10 +103,22 @@ a {
   border-color: var(--emerald);
 }
 
-/* Material Symbols */
-.material-symbols-outlined {
-  font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+/* 인라인 SVG 아이콘 (P-4: Material Symbols Outlined 폰트 → 정적 SVG 교체) */
+.icon {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 1em;
+  height: 1em;
+  line-height: 1;
   vertical-align: middle;
+  flex-shrink: 0;
+}
+.icon svg {
+  width: 100%;
+  height: 100%;
+  fill: currentColor;
+  display: block;
 }
 
 /* 컨테이너 */
@@ -767,9 +778,10 @@ a {
   border-color: var(--emerald);
   box-shadow: 0 0 8px rgba(0, 255, 157, 0.3);
 }
-.bookmark-btn[aria-pressed='true'] .material-symbols-outlined {
-  font-variation-settings: 'FILL' 1, 'wght' 600;
-}
+/* 북마크 토글: outlined ↔ filled SVG variant 두 개를 stacking 후 aria-pressed 로 표시 토글 */
+.bookmark-btn .icon-star-filled { display: none; }
+.bookmark-btn[aria-pressed='true'] .icon-star-outline { display: none; }
+.bookmark-btn[aria-pressed='true'] .icon-star-filled { display: inline-flex; }
 
 /* archived/fork 배지 (우상단) */
 .card-badge-secondary {
@@ -1152,7 +1164,7 @@ button.card-chip[aria-pressed='true'] {
   align-items: center;
   gap: 12px;
 }
-.readme-card-head .head-left .material-symbols-outlined {
+.readme-card-head .head-left .icon {
   color: var(--text-muted);
 }
 .readme-card-head .head-title {
@@ -1174,6 +1186,10 @@ button.card-chip[aria-pressed='true'] {
   color: var(--emerald);
   background: var(--bg-elevated);
 }
+/* 복사 직후 2초간 .copied 클래스 동안 content_copy → check 로 토글 */
+.readme-card-head .copy-btn .icon-copy-active { display: none; }
+.readme-card-head .copy-btn.copied .icon-copy-default { display: none; }
+.readme-card-head .copy-btn.copied .icon-copy-active { display: inline-flex; }
 .readme-card-body {
   padding: 32px;
 }
@@ -1385,7 +1401,7 @@ button.card-chip[aria-pressed='true'] {
   align-items: center;
   gap: 12px;
 }
-.releases-card-head .head-left .material-symbols-outlined {
+.releases-card-head .head-left .icon {
   color: var(--text-muted);
 }
 .releases-card-head .head-title {

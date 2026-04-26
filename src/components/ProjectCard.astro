@@ -5,6 +5,7 @@
 // - data-* 속성은 src/scripts/filter.ts 가 검색/필터/정렬에 사용 (유지)
 import type { RepoCardData } from '../lib/types';
 import { withBase } from '../lib/paths';
+import Icon from './Icon.astro';
 
 interface Props {
   card: RepoCardData;
@@ -52,7 +53,8 @@ const chip2 = topic2?.toUpperCase() ?? null;
       aria-label="북마크 추가"
       data-i18n-arialabel="bookmark_add"
     >
-      <span class="material-symbols-outlined" aria-hidden="true">star</span>
+      <Icon name="star" class="icon-star-outline" />
+      <Icon name="star_filled" class="icon-star-filled" />
     </button>
 
     <!-- archived / fork 배지 (우상단) -->

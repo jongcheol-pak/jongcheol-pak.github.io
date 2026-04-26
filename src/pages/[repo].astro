@@ -8,6 +8,7 @@ import ReadmePanel from '../components/detail/ReadmePanel.astro';
 import ReleasesCard from '../components/detail/ReleasesCard.astro';
 import ActivitySpark from '../components/detail/ActivitySpark.astro';
 import ActionButtons from '../components/detail/ActionButtons.astro';
+import Icon from '../components/Icon.astro';
 import { getDetailRouteList, getRepoDetail } from '../lib/data';
 
 export async function getStaticPaths() {
@@ -76,7 +77,7 @@ const ogImagePath = `/og/${detail.name}.png`;
     aria-label="맨 위로"
     data-i18n-arialabel="back_to_top"
   >
-    <span class="material-symbols-outlined" aria-hidden="true">keyboard_arrow_up</span>
+    <Icon name="keyboard_arrow_up" />
   </button>
 
   <script is:inline>

@@ -3,6 +3,7 @@
 // - variant="default" : 메인 페이지 (로고 + 검색 + 언어)
 // - variant="detail"  : 상세 페이지 (← Back + 로고 + 언어)
 import { withBase } from '../lib/paths';
+import Icon from './Icon.astro';
 
 interface Props {
   variant?: 'default' | 'detail';
@@ -17,7 +18,7 @@ const homeHref = withBase('/');
       <!-- 좌: Back 버튼 -->
       <div class="flex items-center justify-start">
         <a href={homeHref} class="back-button" aria-label="홈으로" data-i18n-arialabel="back">
-          <span class="material-symbols-outlined" aria-hidden="true">arrow_back</span>
+          <Icon name="arrow_back" />
           <span data-i18n="back">홈으로</span>
         </a>
       </div>
@@ -36,7 +37,7 @@ const homeHref = withBase('/');
     ) : (
       <div class="flex items-center justify-center">
         <div class="header-search">
-          <span class="material-symbols-outlined search-icon" aria-hidden="true">search</span>
+          <Icon name="search" class="search-icon" />
           <input
             type="search"
             id="search-input"
@@ -63,9 +64,9 @@ const homeHref = withBase('/');
           aria-label="언어 변경"
           data-i18n-arialabel="language"
         >
-          <span class="material-symbols-outlined lang-icon" aria-hidden="true">language</span>
+          <Icon name="language" class="lang-icon" />
           <span id="lang-current-label">한국어</span>
-          <span class="material-symbols-outlined lang-caret" aria-hidden="true">expand_more</span>
+          <Icon name="expand_more" class="lang-caret" />
         </button>
         <ul id="lang-menu" class="lang-menu" role="menu" aria-label="언어 선택">
           <li role="none">
