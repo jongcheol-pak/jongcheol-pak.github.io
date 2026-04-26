@@ -47,6 +47,7 @@ _Lighthouse 점수 자동 갱신: 2026-04-26 (UTC)_
 - **Top AppBar**: `← Back` + 중앙 `P-J-C` 로고 + 우 언어 드롭다운 (sticky)
 - **Project Header**: 상태 pulse 배지(`STABLE` / `BETA` / `ARCHIVED` / `FORK` / `ACTIVE`) + 최신 release tag(`vX.Y.Z_LATEST`) + **OPEN ISSUES 카운터(클릭 시 GitHub 이슈 페이지 새 탭)** + 타이틀 + 설명 + `Last Updated` 상대 시간
 - **2열 레이아웃**: 왼쪽 README 카드(헤더바 + sanitize 된 prose-emerald 본문) + 오른쪽 최근 4주 commit sparkline + Releases 카드 + 액션 버튼
+- **README 원본 복사 버튼**: README 카드 헤더 우측 상단에 복사 아이콘. 클릭 시 원본 Markdown 을 클립보드에 복사 + 아이콘이 2초간 ✓ 로 변경 + 화면 하단 `복사됨` 토스트 (HTTPS 환경 필요 — 로컬 `http://localhost` 에서는 `navigator.clipboard` 미작동)
 - **최근 4주 commit sparkline**: 우측 상단에 GitHub `stats/commit_activity` 기반 4주 주별 commit 수 미니 그래프(SVG polyline + 4 노드, 노드 hover 시 `N commits` 툴팁) + 4주 합계. 0커밋 저장소 / GitHub stats 워밍업 미완료(202 → 3회 × 1.5s 재시도) / 404·451 → **미렌더 폴백**
 - **README 렌더링**: Markdown → 안전한 HTML 변환 (sanitize-html 로 XSS 방지)
 - **상대 경로 자동 해결**: README 내 이미지/링크는 GitHub raw/blob 절대 경로로 변환
