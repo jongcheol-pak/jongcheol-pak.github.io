@@ -1,0 +1,84 @@
+# Lighthouse CI: 배포 후 공개 URL 에 대해 성능/접근성/SEO/모범사례 점수 측정
+# - deploy 워크플로우 완료 후 자동 실행 (workflow_run)
+# - 점수 4개를 README 의 `<!-- LIGHTHOUSE:START -->`/`<!-- LIGHTHOUSE:END -->` 마커 사이에 markdown table 로 갱신 (C-3)
+# - auto-commit 은 prefix `[lighthouse]` 로 deploy.yml 의 가드와 짝을 이뤄 트리거 루프 차단
+
+name: Lighthouse CI
+
+on:
+  workflow_run:
+    workflows: ['Deploy to GitHub Pages']
+    types: [completed]
+  workflow_dispatch:
+
+# README auto-commit 을 위해 contents: write 필요
+permissions:
+  contents: write
+
+jobs:
+  lighthouse:
+    if: ${{ github.event_name == 'workflow_dispatch' || github.event.workflow_run.conclusion == 'success' }}
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+        with:
+          # auto-commit push 를 위해 default branch 의 최신 SHA 를 받는다
+          ref: main
+          fetch-depth: 0
+
+      - name: Run Lighthouse CI
+        uses: treosh/lighthouse-ci-action@v12
+        with:
+          urls: |
+            https://jongcheol-pak.github.io/
+          uploadArtifacts: true
+          temporaryPublicStorage: true
+
+      - name: Update README badge
+        # treosh action 이 .lighthouseci/lhr-*.json 을 남김 → jq 로 카테고리 점수 추출
+        # 점수는 0~1 → 0~100 으로 정규화 후 정수 반올림
+        run: |
+          set -euo pipefail
+          LHR=$(ls .lighthouseci/lhr-*.json | head -n 1)
+          PERF=$(jq '(.categories.performance.score * 100) | round' "$LHR")
+          A11Y=$(jq '(.categories.accessibility.score * 100) | round' "$LHR")
+          BP=$(jq '(.categories["best-practices"].score * 100) | round' "$LHR")
+          SEO=$(jq '(.categories.seo.score * 100) | round' "$LHR")
+          UPDATED=$(date -u +'%Y-%m-%d')
+
+          python3 - <<PY
+          import re, pathlib
+          path = pathlib.Path('README.md')
+          content = path.read_text(encoding='utf-8')
+          badge = (
+              "<!-- LIGHTHOUSE:START -->\n"
+              "| Performance | Accessibility | Best Practices | SEO |\n"
+              "|---|---|---|---|\n"
+              f"| ${PERF} | ${A11Y} | ${BP} | ${SEO} |\n"
+              "\n"
+              f"_Lighthouse 점수 자동 갱신: ${UPDATED} (UTC)_\n"
+              "<!-- LIGHTHOUSE:END -->"
+          )
+          new = re.sub(
+              r'<!-- LIGHTHOUSE:START -->.*?<!-- LIGHTHOUSE:END -->',
+              badge,
+              content,
+              flags=re.DOTALL,
+          )
+          path.write_text(new, encoding='utf-8')
+          PY
+
+      - name: Commit README badge
+        # 가드 prefix `[lighthouse]` — deploy.yml 의 build job 이 이 prefix 면 조기 종료
+        run: |
+          set -euo pipefail
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          if git diff --quiet README.md; then
+            echo "[lighthouse] README 변경 없음 — commit 생략"
+            exit 0
+          fi
+          git add README.md
+          git commit -m "[lighthouse] update README badge $(date -u +'%Y-%m-%d')"
+          git push origin HEAD:main

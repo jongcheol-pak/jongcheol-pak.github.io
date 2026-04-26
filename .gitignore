@@ -1,3 +1,6 @@
+# 전역 .gitignore 의 .github/ 룰을 무효화 — 이 저장소는 GitHub Actions 워크플로우를 추적해야 한다
+!.github/
+
 # Astro / Node
 node_modules/
 dist/
