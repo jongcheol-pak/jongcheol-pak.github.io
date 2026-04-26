@@ -238,48 +238,69 @@ export function fetchLanguages(repoName: string): Promise<Record<string, number>
   return p;
 }
 
-// 최근 4주 주별 commit 수 — GitHub stats API
-// - 202: stats 캐시 워밍업 중. 1.5s 대기 × 최대 3회 재시도 후 실패 시 null
-// - 404/451: 빈/접근 불가 → null (sparkline 미렌더 폴백)
-// - 정상 응답: 52주 중 마지막 4주의 total 만 추출 (오래된 주 → 최신 주 순)
+// 최근 4주 주별 commit 수 — GitHub commits API (plan v4 후속, stats endpoint 워밍업
+// 미작동 이슈 회피). 이전에 사용하던 `stats/commit_activity` 는 활동 적은 저장소에서는
+// GitHub 가 stats 캐시를 만들지 않아 25s+ 대기해도 202 만 반환 → commits 엔드포인트로 전환.
+//
+// - `commits?since=<28일전 ISO>&per_page=100` paginated 호출 (활동 적은 저장소는 1회로 완결)
+// - 각 commit 의 `commit.author.date` 를 7일 단위 4 bucket 에 카운트
+// - 반환: [week-3, week-2, week-1, week-0] (오래된 주 → 최신 주, ActivitySpark 입력 호환)
+// - 4주 commit 0건 / 404 / rate limit / 네트워크 실패 → null (sparkline 미렌더 폴백)
 // - mock 모드는 항상 null
+
+interface GitHubCommitListItem {
+  commit: {
+    author: { date: string } | null;
+    committer: { date: string } | null;
+  };
+}
+
+const COMMIT_ACTIVITY_DAYS = 28;
+
 export function fetchCommitActivity(repoName: string): Promise<number[] | null> {
   const cached = commitActivityCache.get(repoName);
   if (cached) return cached;
 
-  const url = `${API_BASE}/repos/${OWNER}/${repoName}/stats/commit_activity`;
   const p = (async () => {
     if (USE_MOCK) return null;
 
-    const headers = buildGithubHeaders();
+    const since = new Date(Date.now() - COMMIT_ACTIVITY_DAYS * 24 * 60 * 60 * 1000).toISOString();
+    const firstUrl =
+      `${API_BASE}/repos/${OWNER}/${repoName}/commits` +
+      `?since=${encodeURIComponent(since)}&per_page=100`;
 
-    for (let attempt = 0; attempt < 3; attempt++) {
-      try {
-        const res = await fetch(url, { headers });
-        if (res.status === 202) {
-          // 워밍업 중: 1.5s 대기 후 재시도
-          await new Promise((r) => setTimeout(r, 1500));
-          continue;
-        }
-        if (res.status === 404 || res.status === 451) return null;
-        if (!res.ok) {
-          console.error(
-            `[github] commit_activity ${res.status} ${res.statusText} for ${repoName}`,
-          );
-          return null;
-        }
-        const data = (await res.json()) as Array<{ total: number; week: number }>;
-        if (!Array.isArray(data) || data.length === 0) return null;
-        // 마지막 4주만 추출 (오래된 주 → 최신 주 순서)
-        return data.slice(-4).map((w) => w.total);
-      } catch (err) {
-        console.error(`[github] commit_activity fetch failed for ${repoName}:`, err);
-        return null;
+    try {
+      const allCommits: GitHubCommitListItem[] = [];
+      let nextUrl: string | null = firstUrl;
+      while (nextUrl) {
+        const { data, response } = await githubFetch<GitHubCommitListItem[]>(nextUrl);
+        if (!data) break;
+        allCommits.push(...data);
+        nextUrl = parseNextLink(response.headers.get('Link'));
       }
+
+      if (allCommits.length === 0) return null;
+
+      // 7일 단위 4 bucket: index 0 = 28~22일 전, index 3 = 지난 7일
+      const now = Date.now();
+      const buckets = [0, 0, 0, 0];
+      for (const c of allCommits) {
+        const dateStr = c.commit?.author?.date ?? c.commit?.committer?.date;
+        if (!dateStr) continue;
+        const ts = new Date(dateStr).getTime();
+        if (Number.isNaN(ts)) continue;
+        const daysAgo = Math.floor((now - ts) / (24 * 60 * 60 * 1000));
+        if (daysAgo < 0 || daysAgo >= COMMIT_ACTIVITY_DAYS) continue;
+        const weekIdx = 3 - Math.floor(daysAgo / 7);
+        if (weekIdx >= 0 && weekIdx < 4) buckets[weekIdx] += 1;
+      }
+      // 모든 주가 0 이면 미렌더 (가드 `.some((v) => v > 0)` 와 동일 효과)
+      if (buckets.every((v) => v === 0)) return null;
+      return buckets;
+    } catch (err) {
+      console.error(`[github] commit_activity fetch failed for ${repoName}:`, err);
+      return null;
     }
-    // 3회 시도해도 워밍업 끝나지 않음 — 미렌더 폴백
-    console.warn(`[github] commit_activity warm-up timed out for ${repoName}`);
-    return null;
   })();
   commitActivityCache.set(repoName, p);
   return p;
