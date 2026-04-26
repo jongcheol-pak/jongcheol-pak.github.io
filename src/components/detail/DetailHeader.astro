@@ -9,6 +9,8 @@ import Icon from '../Icon.astro';
 
 interface Props {
   repoName: string;
+  // 상세 헤더 제목 표시 별칭 (repo-overrides.json 의 displayName). 미설정 시 repoName 사용
+  displayName?: string;
   description?: string | null;
   updatedAt: string;
   releases: GitHubRelease[];
@@ -19,7 +21,8 @@ interface Props {
   stars: number;
   repoUrl: string;
 }
-const { repoName, description, updatedAt, releases, archived, fork, openIssues, stars, repoUrl } = Astro.props;
+const { repoName, displayName, description, updatedAt, releases, archived, fork, openIssues, stars, repoUrl } = Astro.props;
+const titleText = displayName ?? repoName;
 const issuesUrl = `${repoUrl}/issues`;
 const stargazersUrl = `${repoUrl}/stargazers`;
 
@@ -73,7 +76,7 @@ const fmtKo = (iso: string): string => formatRelative(iso, 'ko');
         <span class="detail-open-issues-num">{openIssues}</span>
       </a>
     </div>
-    <h1 class="detail-title">{repoName}</h1>
+    <h1 class="detail-title">{titleText}</h1>
     {description && <p class="detail-subtitle">{description}</p>}
   </div>
 

@@ -4,6 +4,7 @@
   }
   ,
    "DevDashboard_WinUI": {
-    "downloadUrl": "https://apps.microsoft.com/detail/9PKTKD64X5L6?hl=ko-kr&gl=KR&ocid=pdpshare"
+    "downloadUrl": "https://apps.microsoft.com/detail/9PKTKD64X5L6?hl=ko-kr&gl=KR&ocid=pdpshare",
+    "displayName": "프로젝트 대시보드"
   }
 }

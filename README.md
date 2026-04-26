@@ -299,11 +299,16 @@ _Lighthouse 점수 자동 갱신: 2026-04-26 (UTC)_
 {
   "AppGroup": {
     "downloadUrl": "https://apps.microsoft.com/detail/9N99WJ23ZWW9?hl=ko-kr&gl=KR"
+  },
+  "DevDashboard_WinUI": {
+    "downloadUrl": "https://apps.microsoft.com/detail/9PKTKD64X5L6?hl=ko-kr&gl=KR",
+    "displayName": "프로젝트 대시보드"
   }
 }
 ```
 - key: GitHub 저장소 이름 (대소문자 그대로)
 - downloadUrl: 클릭 시 이동할 URL (절대 경로)
+- displayName: 카드 제목 / 상세 헤더 타이틀에 표시될 별칭. URL · 검색 · 북마크 · OG 이미지 · sitemap 등 식별자 키는 원본 저장소 이름을 그대로 사용 (식별자 안정성 보장). 미설정 시 저장소 이름 그대로 표시
 
 ---
 

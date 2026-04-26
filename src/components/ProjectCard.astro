@@ -16,6 +16,10 @@ const { card } = Astro.props;
 const thumb = card.imageUrl ?? withBase('/Thumbnail.jpg');
 const detailHref = withBase(`/${card.name}/`);
 
+// 표시용 제목: displayName 우선, 없으면 원본 저장소 이름
+// (URL/북마크/data-name/검색 키는 모두 원본 name 유지 — 식별자 안정성)
+const titleText = card.displayName ?? card.name;
+
 // 검색 대상은 모두 lowercase 로 미리 정규화 (filter.ts 가 일관성 유지)
 const dataName = card.name.toLowerCase();
 const dataDescription = (card.description ?? card.summary ?? '').toLowerCase();
@@ -40,8 +44,8 @@ const chip2 = topic2?.toUpperCase() ?? null;
   data-fork={card.fork ? '1' : '0'}
 >
   <div class="card-image">
-    <a href={detailHref} aria-label={`${card.name} 상세 페이지`}>
-      <img src={thumb} alt={`${card.name} 썸네일`} loading="lazy" />
+    <a href={detailHref} aria-label={`${titleText} 상세 페이지`}>
+      <img src={thumb} alt={`${titleText} 썸네일`} loading="lazy" />
     </a>
 
     <!-- 북마크 버튼 (좌상단) -->
@@ -68,7 +72,7 @@ const chip2 = topic2?.toUpperCase() ?? null;
 
   <div class="card-content">
     <h3 class="card-title">
-      <a href={detailHref}>{card.name}</a>
+      <a href={detailHref}>{titleText}</a>
     </h3>
 
     {(card.description || card.summary) && (
