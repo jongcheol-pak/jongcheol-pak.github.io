@@ -3,7 +3,7 @@
 <!-- LIGHTHOUSE:START -->
 | Performance | Accessibility | Best Practices | SEO |
 |---|---|---|---|
-| 66 | 100 | 96 | 100 |
+| 73 | 100 | 96 | 100 |
 
 _Lighthouse 점수 자동 갱신: 2026-04-26 (UTC)_
 <!-- LIGHTHOUSE:END -->
@@ -246,7 +246,7 @@ npm run test:e2e
 - `lighthouse.yml` 워크플로우가 deploy 완료 후 자동으로 https://jongcheol-pak.github.io/ 에 Lighthouse 측정 → 점수 4개(Performance/Accessibility/Best Practices/SEO) 를 README 상단 `<!-- LIGHTHOUSE:START -->
 | Performance | Accessibility | Best Practices | SEO |
 |---|---|---|---|
-| 66 | 100 | 96 | 100 |
+| 73 | 100 | 96 | 100 |
 
 _Lighthouse 점수 자동 갱신: 2026-04-26 (UTC)_
 <!-- LIGHTHOUSE:END -->` 마커 사이에 markdown table 로 갱신
