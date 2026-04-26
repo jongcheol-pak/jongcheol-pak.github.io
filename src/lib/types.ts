@@ -30,7 +30,7 @@ export interface GitHubReadme {
 // 카드 렌더링에 사용하는 정규화된 데이터
 export interface RepoCardData {
   name: string;
-  // 카드/상세 제목 표시용 별칭 (repo-overrides.json 의 displayName). 미설정 시 name 사용
+  // repo-overrides.json 의 displayName 별칭
   displayName?: string;
   description: string | null;
   url: string;
@@ -74,7 +74,7 @@ export interface GitHubRelease {
 // 상세 페이지 렌더링에 사용하는 정규화된 데이터
 export interface RepoDetailData {
   name: string;
-  // 상세 헤더 제목 표시용 별칭 (repo-overrides.json 의 displayName). 미설정 시 name 사용
+  // repo-overrides.json 의 displayName 별칭
   displayName?: string;
   description: string | null;
   url: string;

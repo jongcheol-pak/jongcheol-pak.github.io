@@ -9,7 +9,7 @@ import Icon from '../Icon.astro';
 
 interface Props {
   repoName: string;
-  // 상세 헤더 제목 표시 별칭 (repo-overrides.json 의 displayName). 미설정 시 repoName 사용
+  // 검색/북마크/URL 키는 원본 repoName 유지 → 표시 텍스트만 별칭으로 분리
   displayName?: string;
   description?: string | null;
   updatedAt: string;

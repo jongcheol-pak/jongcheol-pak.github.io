@@ -16,8 +16,7 @@ const { card } = Astro.props;
 const thumb = card.imageUrl ?? withBase('/Thumbnail.jpg');
 const detailHref = withBase(`/${card.name}/`);
 
-// 표시용 제목: displayName 우선, 없으면 원본 저장소 이름
-// (URL/북마크/data-name/검색 키는 모두 원본 name 유지 — 식별자 안정성)
+// data-name/북마크 키/URL 은 원본 name 유지 — 식별자 안정성 (외부 링크/저장된 북마크 깨짐 방지)
 const titleText = card.displayName ?? card.name;
 
 // 검색 대상은 모두 lowercase 로 미리 정규화 (filter.ts 가 일관성 유지)
