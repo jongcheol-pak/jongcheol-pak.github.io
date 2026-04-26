@@ -1,6 +1,6 @@
 // Emerald Cybernetic 테마 설정
 // - 시안 기준: Base #0B0E11, Surface #1A1D23, Elevated #2E323A, Primary #00FF9D
-// - 폰트: Space Grotesk (단일)
+// - 폰트: Inter (영문) / Noto Sans KR (한글) 폴백 단일
 /** @type {import('tailwindcss').Config} */
 export default {
   content: ['./src/**/*.{astro,html,js,jsx,md,mdx,svelte,ts,tsx,vue}'],

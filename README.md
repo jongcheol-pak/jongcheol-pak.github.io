@@ -13,7 +13,7 @@ _Lighthouse 점수 자동 갱신: 2026-04-26 (UTC)_
 각 카드는 저장소 이름·설명·README 첫 이미지·Topic 칩(2개)·업데이트 시간을 표시하며, 클릭 시 해당 저장소의 **상세 페이지**로 이동합니다. 상세 페이지에서는 상태 배지·버전·Last Updated 와 함께 README 전문, Releases 타임라인, 다운로드/GitHub 버튼을 확인할 수 있습니다.
 
 - **배포 URL**: https://jongcheol-pak.github.io/
-- **디자인 테마**: Emerald Cybernetic (void 배경 #0B0E11 + 네온 에메랄드 #00FF9D, Space Grotesk 단일 타이포, 8px radius, 1px 보더 + neon glow)
+- **디자인 테마**: Emerald Cybernetic (void 배경 #0B0E11 + 네온 에메랄드 #00FF9D, Inter / Noto Sans KR 단일 타이포, 8px radius, 1px 보더 + neon glow)
 
 ---
 
