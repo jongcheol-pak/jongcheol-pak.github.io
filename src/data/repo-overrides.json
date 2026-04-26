@@ -7,4 +7,8 @@
     "downloadUrl": "https://apps.microsoft.com/detail/9PKTKD64X5L6?hl=ko-kr&gl=KR&ocid=pdpshare",
     "displayName": "프로젝트 대시보드"
   }
+  ,
+   "MailTrayNotifier": {
+    "displayName": "메일 알리미"
+  }
 }
