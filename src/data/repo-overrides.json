@@ -1,1 +1,9 @@
-{}
+{
+  "AppGroup": {
+    "downloadUrl": "https://apps.microsoft.com/detail/9N99WJ23ZWW9?hl=ko&gl=KR&ocid=pdpshare"
+  }
+  ,
+   "DevDashboard_WinUI": {
+    "downloadUrl": "https://apps.microsoft.com/detail/9PKTKD64X5L6?hl=ko-kr&gl=KR&ocid=pdpshare"
+  }
+}
