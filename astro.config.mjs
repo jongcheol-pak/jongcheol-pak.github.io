@@ -13,7 +13,10 @@ export default defineConfig({
       // 자체 reset/스타일을 그대로 사용하므로 preflight 비활성화
       applyBaseStyles: false,
     }),
-    sitemap(),
+    sitemap({
+      // A-4 검색 인덱스는 검색 엔진 노이즈가 되므로 sitemap 에서 제외
+      filter: (page) => !page.endsWith('/search-index.json'),
+    }),
   ],
   vite: {
     // 빌드 타임 상수 주입:

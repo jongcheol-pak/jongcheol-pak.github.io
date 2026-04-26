@@ -1,6 +1,12 @@
 {
   "name": "P-J-C Workspace Dashboard",
   "short_name": "P-J-C",
+  "id": "/",
+  "start_url": "/",
+  "scope": "/",
+  "display": "standalone",
+  "theme_color": "#00FF9D",
+  "background_color": "#0B0E11",
   "icons": [
     {
       "src": "/web-app-manifest-192x192.png",
@@ -14,8 +20,5 @@
       "type": "image/png",
       "purpose": "maskable"
     }
-  ],
-  "theme_color": "#00FF9D",
-  "background_color": "#0B0E11",
-  "display": "standalone"
+  ]
 }

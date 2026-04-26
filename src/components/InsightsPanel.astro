@@ -1,11 +1,16 @@
 ---
 // Developer Insights Panel — 4개 메트릭 (ACTIVE_PROJECTS / OPEN_ISSUES / SYSTEM_UPTIME / LAST_DEPLOY)
+//                          + B-2: TOP_LANGUAGES / TOP_TOPICS 두 줄 (각각 상위 3개)
 import type { WorkspaceInsights } from '../lib/types';
 
 interface Props {
   insights: WorkspaceInsights;
 }
 const { insights } = Astro.props;
+
+const hasTopLanguages = insights.topLanguages.length > 0;
+const hasTopTopics = insights.topTopics.length > 0;
+const hasTops = hasTopLanguages || hasTopTopics;
 ---
 
 <section class="insights-panel" aria-label="Workspace insights">
@@ -38,4 +43,29 @@ const { insights } = Astro.props;
       <span class="insight-value">—</span>
     )}
   </div>
+
+  {hasTops && (
+    <div class="insights-tops">
+      {hasTopLanguages && (
+        <div class="insight-toplist">
+          <span class="insight-label" data-i18n="insight_top_languages">TOP_LANGUAGES</span>
+          <span class="insight-toplist-values">
+            {insights.topLanguages.map((name, i) => (
+              <span class="insight-tag" data-rank={i}>{name}</span>
+            ))}
+          </span>
+        </div>
+      )}
+      {hasTopTopics && (
+        <div class="insight-toplist">
+          <span class="insight-label" data-i18n="insight_top_topics">TOP_TOPICS</span>
+          <span class="insight-toplist-values">
+            {insights.topTopics.map((name, i) => (
+              <span class="insight-tag" data-rank={i}>{name}</span>
+            ))}
+          </span>
+        </div>
+      )}
+    </div>
+  )}
 </section>

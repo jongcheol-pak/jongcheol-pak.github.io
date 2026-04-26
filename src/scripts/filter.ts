@@ -7,6 +7,7 @@
 
 import { dictionaries, formatTpl, getCurrentLang } from '../i18n/dictionary';
 import { createDropdown } from './dom';
+import { withBase } from '../lib/paths';
 
 const BOOKMARK_KEY = 'bookmarked-repos';
 const PAGE_SIZE = 12;
@@ -73,6 +74,10 @@ function initFilter() {
   let currentPage = 1;
   let lastFilteredOrder: CardElement[] = [];
   const bookmarks = loadBookmarks();
+
+  // A-4: 검색 인덱스 — lazy fetch. 도착 전에는 기존 검색(name/desc/topics) 만으로 동작 (race 폴백)
+  // 도착 시점에 현재 검색어가 있으면 결과를 자동으로 한 번 갱신
+  let searchIndex: Map<string, string> | null = null;
 
   const getTotalPages = () => {
     const total = lastFilteredOrder.length;
@@ -169,7 +174,13 @@ function initFilter() {
         const nameHit = card.dataset.name.toLowerCase().includes(query);
         const descHit = card.dataset.description.toLowerCase().includes(query);
         const topicsHit = card.dataset.topics.toLowerCase().includes(query);
-        if (!nameHit && !descHit && !topicsHit) return false;
+        // A-4: README 인덱스 매칭 — 인덱스 미도착 시 false 로 폴백 (기존 검색 동작 유지)
+        let readmeHit = false;
+        if (searchIndex) {
+          const text = searchIndex.get(card.dataset.name.toLowerCase());
+          if (text) readmeHit = text.includes(query);
+        }
+        if (!nameHit && !descHit && !topicsHit && !readmeHit) return false;
       }
       if (selectedTopics.length > 0) {
         const cardTopics = card.dataset.topics.split(',').filter(Boolean);
@@ -291,16 +302,48 @@ function initFilter() {
     panel: topicPanel,
   });
 
+  // 카드 chip(button[data-topic]) 의 aria-pressed 를 현재 선택 topic 셋과 동기화
+  const syncChipPressed = () => {
+    const selected = new Set(getSelectedTopics());
+    const chips = grid.querySelectorAll<HTMLButtonElement>('.card-chip[data-topic]');
+    for (const chip of chips) {
+      const topic = chip.dataset.topic ?? '';
+      chip.setAttribute('aria-pressed', selected.has(topic) ? 'true' : 'false');
+    }
+  };
+
   for (const cb of topicCheckboxes) {
     cb.addEventListener('change', () => {
       currentPage = 1;
       applyFilters();
+      syncChipPressed();
     });
   }
   topicClear?.addEventListener('click', () => {
     for (const cb of topicCheckboxes) cb.checked = false;
     currentPage = 1;
     applyFilters();
+    syncChipPressed();
+  });
+
+  // 카드 chip 클릭으로 Topic 토글 (event delegation)
+  // - <button> 자체라 카드 진입 링크와 충돌 없음. stopPropagation 으로 미래 카드 click 핸들러 보호
+  // - 알 수 없는 topic(필터 옵션에 없는 값) → 무시
+  grid.addEventListener('click', (e) => {
+    const target = e.target;
+    if (!(target instanceof Element)) return;
+    const chip = target.closest<HTMLButtonElement>('.card-chip[data-topic]');
+    if (!chip) return;
+    const topic = chip.dataset.topic;
+    if (!topic) return;
+    const cb = topicCheckboxes.find((c) => c.value === topic);
+    if (!cb) return;
+    e.preventDefault();
+    e.stopPropagation();
+    cb.checked = !cb.checked;
+    currentPage = 1;
+    applyFilters();
+    syncChipPressed();
   });
 
   const resetToFirstPage = () => {
@@ -339,6 +382,29 @@ function initFilter() {
 
   restoreFromQuery();
   applyFilters();
+  syncChipPressed();
+
+  // A-4: 검색 인덱스 idle 로드 — 도착하면 현재 검색어가 있는 경우만 자동 재실행
+  const loadIdx = () => {
+    fetch(withBase('/search-index.json'))
+      .then((res) => (res.ok ? res.json() : Promise.reject(new Error(`HTTP ${res.status}`))))
+      .then((data: Array<{ name: string; text: string }>) => {
+        searchIndex = new Map(data.map((e) => [e.name, e.text]));
+        const q = (searchInput?.value ?? '').trim();
+        if (q) applyFilters();
+      })
+      .catch(() => {
+        // 네트워크 실패는 조용히 무시 — 기존 검색(name/desc/topics) 동작 유지
+      });
+  };
+  const ric = (window as Window & {
+    requestIdleCallback?: (cb: () => void, opts?: { timeout: number }) => number;
+  }).requestIdleCallback;
+  if (typeof ric === 'function') {
+    ric(loadIdx, { timeout: 2000 });
+  } else {
+    setTimeout(loadIdx, 200);
+  }
 }
 
 if (document.readyState === 'loading') {

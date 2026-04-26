@@ -71,6 +71,19 @@ const canonicalUrl = Astro.site
     <link rel="manifest" href={manifestHref} />
     <meta name="theme-color" content="#00FF9D" />
 
+    <!-- Service Worker 등록 (C-1 PWA) — `/sw.js` 는 Astro endpoint 가 빌드 타임에 emit -->
+    <script is:inline>
+      if ('serviceWorker' in navigator) {
+        window.addEventListener('load', function () {
+          navigator.serviceWorker
+            .register('/sw.js', { scope: '/' })
+            .catch(function (err) {
+              console.warn('[sw] register failed:', err);
+            });
+        });
+      }
+    </script>
+
     <link rel="canonical" href={canonicalUrl} />
 
     <link

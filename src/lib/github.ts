@@ -140,6 +140,8 @@ export async function mapLimit<T, R>(
 let reposPromise: Promise<GitHubRepo[]> | null = null;
 const readmeCache = new Map<string, Promise<string | null>>();
 const releasesCache = new Map<string, Promise<GitHubRelease[]>>();
+const languagesCache = new Map<string, Promise<Record<string, number> | null>>();
+const commitActivityCache = new Map<string, Promise<number[] | null>>();
 
 // public 저장소 전수 조회 (Link 헤더 기반 페이지네이션)
 export function fetchPublicRepos(): Promise<GitHubRepo[]> {
@@ -207,6 +209,82 @@ export function fetchReleases(repoName: string): Promise<GitHubRelease[]> {
     }
   })();
   releasesCache.set(repoName, p);
+  return p;
+}
+
+// 저장소 언어 분포 — { Language: bytes } 형태. 빈 저장소나 미감지 시 빈 객체 반환
+// 실패(404/네트워크/rate limit) 시 null 반환 → 카드 푸터 미니 바 미렌더 폴백
+export function fetchLanguages(repoName: string): Promise<Record<string, number> | null> {
+  const cached = languagesCache.get(repoName);
+  if (cached) return cached;
+
+  const url = `${API_BASE}/repos/${OWNER}/${repoName}/languages`;
+  const p = (async () => {
+    if (USE_MOCK) {
+      // mock 모드는 fixture 인터페이스에 languages 가 없어 항상 null 폴백
+      return null;
+    }
+    try {
+      return await githubFetchData<Record<string, number>>(url);
+    } catch (err) {
+      console.error(`[github] languages fetch failed for ${repoName}, skipping:`, err);
+      return null;
+    }
+  })();
+  languagesCache.set(repoName, p);
+  return p;
+}
+
+// 최근 4주 주별 commit 수 — GitHub stats API
+// - 202: stats 캐시 워밍업 중. 1.5s 대기 × 최대 3회 재시도 후 실패 시 null
+// - 404/451: 빈/접근 불가 → null (sparkline 미렌더 폴백)
+// - 정상 응답: 52주 중 마지막 4주의 total 만 추출 (오래된 주 → 최신 주 순)
+// - mock 모드는 항상 null
+export function fetchCommitActivity(repoName: string): Promise<number[] | null> {
+  const cached = commitActivityCache.get(repoName);
+  if (cached) return cached;
+
+  const url = `${API_BASE}/repos/${OWNER}/${repoName}/stats/commit_activity`;
+  const p = (async () => {
+    if (USE_MOCK) return null;
+
+    const token = import.meta.env.GITHUB_TOKEN ?? process.env.GITHUB_TOKEN;
+    const headers: Record<string, string> = {
+      Accept: 'application/vnd.github+json',
+      'X-GitHub-Api-Version': '2022-11-28',
+      'User-Agent': 'jongcheol-pak-homepage',
+    };
+    if (token) headers.Authorization = `Bearer ${token}`;
+
+    for (let attempt = 0; attempt < 3; attempt++) {
+      try {
+        const res = await fetch(url, { headers });
+        if (res.status === 202) {
+          // 워밍업 중: 1.5s 대기 후 재시도
+          await new Promise((r) => setTimeout(r, 1500));
+          continue;
+        }
+        if (res.status === 404 || res.status === 451) return null;
+        if (!res.ok) {
+          console.error(
+            `[github] commit_activity ${res.status} ${res.statusText} for ${repoName}`,
+          );
+          return null;
+        }
+        const data = (await res.json()) as Array<{ total: number; week: number }>;
+        if (!Array.isArray(data) || data.length === 0) return null;
+        // 마지막 4주만 추출 (오래된 주 → 최신 주 순서)
+        return data.slice(-4).map((w) => w.total);
+      } catch (err) {
+        console.error(`[github] commit_activity fetch failed for ${repoName}:`, err);
+        return null;
+      }
+    }
+    // 3회 시도해도 워밍업 끝나지 않음 — 미렌더 폴백
+    console.warn(`[github] commit_activity warm-up timed out for ${repoName}`);
+    return null;
+  })();
+  commitActivityCache.set(repoName, p);
   return p;
 }
 

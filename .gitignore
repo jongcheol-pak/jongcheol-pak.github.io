@@ -6,6 +6,13 @@ dist/
 .env.*
 !.env.example
 
+# Phase 8 (C-4): 빌드 타임 sharp 변환 썸네일 — 빌드마다 재생성되므로 커밋 X
+public/thumbs/
+
+# Phase 9 (C-2): Playwright 산출물
+playwright-report/
+test-results/
+
 # Logs
 *.log
 npm-debug.log*

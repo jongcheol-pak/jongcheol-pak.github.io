@@ -6,6 +6,7 @@ import Header from '../components/Header.astro';
 import DetailHeader from '../components/detail/DetailHeader.astro';
 import ReadmePanel from '../components/detail/ReadmePanel.astro';
 import ReleasesCard from '../components/detail/ReleasesCard.astro';
+import ActivitySpark from '../components/detail/ActivitySpark.astro';
 import ActionButtons from '../components/detail/ActionButtons.astro';
 import { getDetailRouteList, getRepoDetail } from '../lib/data';
 
@@ -44,6 +45,8 @@ const ogImagePath = `/og/${detail.name}.png`;
       releases={detail.releases}
       archived={detail.archived}
       fork={detail.fork}
+      openIssues={detail.openIssues}
+      repoUrl={detail.url}
     />
 
     <div class="detail-grid">
@@ -52,9 +55,12 @@ const ogImagePath = `/og/${detail.name}.png`;
         <ReadmePanel html={detail.readmeHtml} />
       </div>
 
-      <!-- 오른쪽: Releases + 액션 버튼 -->
+      <!-- 오른쪽: 최근 4주 commit sparkline + Releases + 액션 버튼 -->
       <div class="detail-right">
         <div class="sticky-wrap">
+          {detail.recentCommits && detail.recentCommits.some((v) => v > 0) && (
+            <ActivitySpark weeks={detail.recentCommits} />
+          )}
           <ReleasesCard releases={detail.releases} repoUrl={detail.url} />
           <ActionButtons downloadUrl={detail.downloadUrl} repoUrl={detail.url} />
         </div>

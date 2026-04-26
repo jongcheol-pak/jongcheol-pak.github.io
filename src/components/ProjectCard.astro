@@ -20,9 +20,11 @@ const dataName = card.name.toLowerCase();
 const dataDescription = (card.description ?? card.summary ?? '').toLowerCase();
 const dataTopics = card.topics.join(',');
 
-// 칩 1 / 칩 2 — topics[0], topics[1] 을 uppercase 로
-const chip1 = card.topics[0]?.toUpperCase() ?? null;
-const chip2 = card.topics[1]?.toUpperCase() ?? null;
+// 칩 1 / 칩 2 — 표시 텍스트는 uppercase, data-topic 은 FilterBar checkbox value 와 매칭되도록 lowercase 원문
+const topic1 = card.topics[0] ?? null;
+const topic2 = card.topics[1] ?? null;
+const chip1 = topic1?.toUpperCase() ?? null;
+const chip2 = topic2?.toUpperCase() ?? null;
 ---
 
 <article
@@ -72,13 +74,38 @@ const chip2 = card.topics[1]?.toUpperCase() ?? null;
     )}
 
     <div class="card-chips">
-      {chip1 && <span class="card-chip">{chip1}</span>}
-      {chip2 && <span class="card-chip alt">{chip2}</span>}
+      {chip1 && topic1 && (
+        <button type="button" class="card-chip" data-topic={topic1.toLowerCase()} aria-pressed="false">{chip1}</button>
+      )}
+      {chip2 && topic2 && (
+        <button type="button" class="card-chip alt" data-topic={topic2.toLowerCase()} aria-pressed="false">{chip2}</button>
+      )}
     </div>
 
-    <span class="card-updated">
-      <span data-i18n="card_updated_prefix">Updated:</span>
-      &nbsp;<span data-iso={card.updatedAt}>{card.updatedAt}</span>
-    </span>
+    {card.languages && card.languages.length > 0 && (
+      <div class="card-langs" role="img" aria-label={`Top languages: ${card.languages.map((l) => `${l.name} ${(l.ratio * 100).toFixed(0)}%`).join(', ')}`}>
+        {card.languages.map((l, i) => (
+          <span
+            class="card-lang-seg"
+            data-rank={i}
+            style={`width: ${(l.ratio * 100).toFixed(2)}%`}
+            title={`${l.name} ${(l.ratio * 100).toFixed(1)}%`}
+          />
+        ))}
+      </div>
+    )}
+
+    <div class="card-footer">
+      <span class="card-updated">
+        <span data-i18n="card_updated_prefix">Updated:</span>
+        &nbsp;<span data-iso={card.updatedAt}>{card.updatedAt}</span>
+      </span>
+      {card.openIssues > 0 && (
+        <span class="card-open-issues">
+          <span data-i18n="open_issues_label">OPEN ISSUES</span>
+          <span class="card-open-issues-num">{card.openIssues}</span>
+        </span>
+      )}
+    </div>
   </div>
 </article>

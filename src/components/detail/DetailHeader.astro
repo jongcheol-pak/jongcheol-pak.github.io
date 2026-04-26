@@ -13,8 +13,11 @@ interface Props {
   releases: GitHubRelease[];
   archived: boolean;
   fork: boolean;
+  openIssues: number;
+  repoUrl: string;
 }
-const { repoName, description, updatedAt, releases, archived, fork } = Astro.props;
+const { repoName, description, updatedAt, releases, archived, fork, openIssues, repoUrl } = Astro.props;
+const issuesUrl = `${repoUrl}/issues`;
 
 // 상태 분류: archived → ARCHIVED / prerelease → BETA / stable release → STABLE / fork → FORK / else → ACTIVE
 type StatusKind = 'archived' | 'fork' | 'beta' | 'stable' | 'active';
@@ -42,6 +45,16 @@ const fmtKo = (iso: string): string => formatRelative(iso, 'ko');
         <span data-i18n={status.i18nKey}>{status.label}</span>
       </span>
       {versionLabel && <span class="version-label">{versionLabel}</span>}
+      <a
+        href={issuesUrl}
+        target="_blank"
+        rel="noopener noreferrer"
+        class="detail-open-issues"
+        aria-label={`${openIssues} open issues on GitHub`}
+      >
+        <span data-i18n="open_issues_label">OPEN ISSUES</span>
+        <span class="detail-open-issues-num">{openIssues}</span>
+      </a>
     </div>
     <h1 class="detail-title">{repoName}</h1>
     {description && <p class="detail-subtitle">{description}</p>}
