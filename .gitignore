@@ -24,8 +24,9 @@ npm-debug.log*
 .DS_Store
 Thumbs.db
 
-# 작업용 (로컬 전용)
+# 작업용 (로컬 전용) — Linux runner 의 case-sensitive 매칭 대비 두 변형 모두 명시
 notes.md
+NOTES.md
 plan.md
 
 # Legacy Jekyll (이관 완료 후 제거 예정)
