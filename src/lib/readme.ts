@@ -6,6 +6,7 @@
 import { marked } from 'marked';
 import sanitizeHtml from 'sanitize-html';
 import { OWNER } from './github';
+import { toPlainText } from './search-index';
 
 // 첫 이미지: Markdown ![]() 우선, 없으면 <img src="">
 export function extractFirstImage(
@@ -30,27 +31,10 @@ export function extractFirstImage(
   return null;
 }
 
-// README 요약 (기본 180자)
+// README 요약 (기본 180자) — Markdown 정규화는 search-index.ts 의 toPlainText 와 공유
 export function extractSummary(markdown: string, maxLen = 180): string {
-  if (!markdown) return '';
-
-  let text = markdown;
-  text = text.replace(/```[\s\S]*?```/g, '');
-  text = text.replace(/`[^`]*`/g, '');
-  text = text.replace(/<!--[\s\S]*?-->/g, '');
-  text = text.replace(/<[^>]+>/g, '');
-  text = text.replace(/!\[[^\]]*\]\([^)]*\)/g, '');
-  text = text.replace(/\[([^\]]+)\]\([^)]*\)/g, '$1');
-  text = text.replace(/^\s*\[[^\]]+\]:\s*\S+.*$/gm, '');
-  text = text.replace(/^#{1,6}\s+/gm, '');
-  text = text.replace(/^\s*[-*+]\s+/gm, '');
-  text = text.replace(/^\s*\d+\.\s+/gm, '');
-  text = text.replace(/^\s*>\s?/gm, '');
-  text = text.replace(/^\s*[-*_]{3,}\s*$/gm, '');
-  text = text.replace(/(\*\*|__)(.+?)\1/g, '$2');
-  text = text.replace(/(\*|_)(.+?)\1/g, '$2');
-  text = text.replace(/\s+/g, ' ').trim();
-
+  const text = toPlainText(markdown);
+  if (!text) return '';
   if (text.length <= maxLen) return text;
 
   const sliced = text.slice(0, maxLen);

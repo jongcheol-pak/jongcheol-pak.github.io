@@ -306,4 +306,7 @@ _Lighthouse 점수 자동 갱신: 2026-04-26 (UTC)_
 
 ## 라이선스
 
-본 프로젝트의 코드 구조 및 기능은 [bitleader-dev/bitleader](https://github.com/bitleader-dev/bitleader) (MIT) 를 기반으로 이식·재가공한 것입니다. Emerald Cybernetic 디자인은 본 저장소의 자체 작업입니다.
+본 프로젝트는 [MIT 라이선스](LICENSE) 하에 배포됩니다.
+
+자유롭게 사용·수정·재배포가 가능하지만, **재배포 시 원저작자 표시(Copyright © 2026 jongcheol-pak) 와 라이선스 전문을 함께 포함**해야 합니다.
+

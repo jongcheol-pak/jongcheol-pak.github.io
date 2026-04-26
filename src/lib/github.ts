@@ -57,21 +57,24 @@ interface FetchOptions {
   notFoundIsNull?: boolean;
 }
 
-async function githubFetch<T>(
-  url: string,
-  opts: FetchOptions = {},
-): Promise<{ data: T | null; response: Response }> {
-  const { notFoundIsNull = true } = opts;
+// GitHub REST API 공통 헤더 (githubFetch / fetchCommitActivity 의 raw fetch 양쪽에서 사용)
+function buildGithubHeaders(): Record<string, string> {
   const token = import.meta.env.GITHUB_TOKEN ?? process.env.GITHUB_TOKEN;
-
   const headers: Record<string, string> = {
     Accept: 'application/vnd.github+json',
     'X-GitHub-Api-Version': '2022-11-28',
     'User-Agent': 'jongcheol-pak-homepage',
   };
-  if (token) {
-    headers.Authorization = `Bearer ${token}`;
-  }
+  if (token) headers.Authorization = `Bearer ${token}`;
+  return headers;
+}
+
+async function githubFetch<T>(
+  url: string,
+  opts: FetchOptions = {},
+): Promise<{ data: T | null; response: Response }> {
+  const { notFoundIsNull = true } = opts;
+  const headers = buildGithubHeaders();
 
   try {
     const res = await fetch(url, { headers });
@@ -248,13 +251,7 @@ export function fetchCommitActivity(repoName: string): Promise<number[] | null> 
   const p = (async () => {
     if (USE_MOCK) return null;
 
-    const token = import.meta.env.GITHUB_TOKEN ?? process.env.GITHUB_TOKEN;
-    const headers: Record<string, string> = {
-      Accept: 'application/vnd.github+json',
-      'X-GitHub-Api-Version': '2022-11-28',
-      'User-Agent': 'jongcheol-pak-homepage',
-    };
-    if (token) headers.Authorization = `Bearer ${token}`;
+    const headers = buildGithubHeaders();
 
     for (let attempt = 0; attempt < 3; attempt++) {
       try {

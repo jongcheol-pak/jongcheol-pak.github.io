@@ -49,6 +49,7 @@
   "btn_source": "Source",
   "readme_heading": "README.md",
   "readme_copy": "Copy",
+  "readme_copy_done": "Copied",
   "last_updated_label": "Last Updated",
   "activity_spark_label": "LAST_4_WEEKS",
   "releases_heading": "Releases",

@@ -76,6 +76,8 @@ export interface RepoDetailData {
   url: string;
   defaultBranch: string;
   readmeHtml: string;
+  // README 원본 Markdown (상세 페이지 복사 버튼용)
+  readme: string;
   releases: GitHubRelease[];
   downloadUrl: string | null;
   // DetailHeader 에 필요한 저장소 메타 (repo 원본 재전달 제거용)

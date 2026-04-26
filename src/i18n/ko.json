@@ -49,6 +49,7 @@
   "btn_source": "소스",
   "readme_heading": "README.md",
   "readme_copy": "복사",
+  "readme_copy_done": "복사됨",
   "last_updated_label": "최근 업데이트",
   "activity_spark_label": "최근 4주 커밋",
   "releases_heading": "Releases",

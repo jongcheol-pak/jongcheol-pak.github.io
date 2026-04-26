@@ -275,6 +275,7 @@ export async function getRepoDetail(repoName: string): Promise<RepoDetailData | 
     url: repo.html_url,
     defaultBranch: repo.default_branch,
     readmeHtml,
+    readme,
     releases,
     downloadUrl,
     updatedAt: repo.updated_at,
