@@ -226,6 +226,7 @@ npm run test:e2e
 - 사전 빌드된 `dist/` 가 필요 (Playwright 의 webServer 가 `npm run preview` 자동 기동)
 - 테스트 케이스: ① 메인 카드 ≥1개 렌더 / ② 검색 필터 입력 시 visible 카드 수 감소
 - chromium 만 사용 (Firefox/WebKit 미설치 — 표면 최소화)
+- CI(`deploy.yml`) 에서도 빌드 직후 자동 실행 — 실패 시 `Upload Pages artifact` step 차단 → deploy job 스킵
 
 ---
 

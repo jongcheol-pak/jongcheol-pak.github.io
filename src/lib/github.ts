@@ -157,11 +157,23 @@ export function fetchPublicRepos(): Promise<GitHubRepo[]> {
     }
     const acc: GitHubRepo[] = [];
     let nextUrl: string | null = firstUrl;
+    let skippedCount = 0;
     while (nextUrl) {
       const { data, response } = await githubFetch<GitHubRepo[]>(nextUrl);
       if (!data) break;
-      acc.push(...data);
+      // M-2: 응답 무결성 게이트 — `name` 이 비정상이면 후속 메모이제이션 키/URL 조립이 깨지므로 폴백
+      // (GitHub API 스키마 침묵 변경 대비. 게이트 실패는 reject 가 아닌 skip + warn — fail-soft 유지)
+      for (const repo of data) {
+        if (typeof repo?.name === 'string' && repo.name.length > 0) {
+          acc.push(repo);
+        } else {
+          skippedCount += 1;
+        }
+      }
       nextUrl = parseNextLink(response.headers.get('Link'));
+    }
+    if (skippedCount > 0) {
+      console.warn(`[github] fetchPublicRepos: skipped ${skippedCount} entries without a valid name.`);
     }
     return acc;
   })();
@@ -284,11 +296,22 @@ export function fetchCommitActivity(repoName: string): Promise<number[] | null> 
       // 7일 단위 4 bucket: index 0 = 28~22일 전, index 3 = 지난 7일
       const now = Date.now();
       const buckets = [0, 0, 0, 0];
+      // M-2: date 파싱 실패는 침묵 continue 였으나, 빌드 투명성 위해 1회만 warn 노출
+      // (반복 경고로 빌드 로그가 오염되지 않도록 저장소 단위 1회 제한)
+      let dateParseWarnedThisRepo = false;
       for (const c of allCommits) {
         const dateStr = c.commit?.author?.date ?? c.commit?.committer?.date;
         if (!dateStr) continue;
         const ts = new Date(dateStr).getTime();
-        if (Number.isNaN(ts)) continue;
+        if (Number.isNaN(ts)) {
+          if (!dateParseWarnedThisRepo) {
+            console.warn(
+              `[github] commit_activity: invalid date "${dateStr}" for ${repoName}, skipping malformed entries.`,
+            );
+            dateParseWarnedThisRepo = true;
+          }
+          continue;
+        }
         const daysAgo = Math.floor((now - ts) / (24 * 60 * 60 * 1000));
         if (daysAgo < 0 || daysAgo >= COMMIT_ACTIVITY_DAYS) continue;
         const weekIdx = 3 - Math.floor(daysAgo / 7);

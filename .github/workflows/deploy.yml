@@ -35,7 +35,8 @@ jobs:
       - name: Setup Node.js
         uses: actions/setup-node@v6
         with:
-          node-version: '22'
+          # M-5: Node 22 LTS (codename "jod") 별칭 사용 — 마이너 패치는 자동 수신, major 변경은 차단
+          node-version: 'lts/jod'
           cache: 'npm'
 
       - name: Install dependencies
@@ -48,6 +49,30 @@ jobs:
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         run: npm run build
+
+      # M-1: E2E 회귀 테스트 — Playwright 가 webServer 로 `npm run preview` 를 자동 기동(localhost:4321)
+      # 빌드된 dist 를 그대로 검사하므로 artifact upload 와 독립적. 실패 시 다음 step(upload) 차단 → deploy 도 needs 로 스킵.
+      - name: Cache Playwright browsers
+        uses: actions/cache@v4
+        with:
+          path: ~/.cache/ms-playwright
+          key: ${{ runner.os }}-playwright-${{ hashFiles('package-lock.json') }}
+          restore-keys: |
+            ${{ runner.os }}-playwright-
+
+      - name: Install Playwright Chromium
+        run: npx playwright install --with-deps chromium
+
+      - name: Run E2E tests
+        run: npm run test:e2e
+
+      - name: Upload Playwright report
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: playwright-report
+          path: playwright-report/
+          retention-days: 7
 
       - name: Upload Pages artifact
         uses: actions/upload-pages-artifact@v5
