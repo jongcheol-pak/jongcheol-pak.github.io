@@ -5,7 +5,7 @@
 |---|---|---|---|
 | 71 | 98 | 96 | 100 |
 
-_Lighthouse 점수 자동 갱신: 2026-05-20 (UTC)_
+_Lighthouse 점수 자동 갱신: 2026-05-21 (UTC)_
 <!-- LIGHTHOUSE:END -->
 
 `jongcheol-pak` GitHub 계정의 public 저장소를 **Emerald Cybernetic** 대시보드로 보여주는 Astro 정적 사이트.
@@ -249,7 +249,7 @@ npm run test:e2e
 |---|---|---|---|
 | 71 | 98 | 96 | 100 |
 
-_Lighthouse 점수 자동 갱신: 2026-05-20 (UTC)_
+_Lighthouse 점수 자동 갱신: 2026-05-21 (UTC)_
 <!-- LIGHTHOUSE:END -->` 마커 사이에 markdown table 로 갱신
 - auto-commit 메시지는 `[lighthouse] update README badge YYYY-MM-DD` — `deploy.yml` 의 build job 이 이 prefix 를 감지하면 스킵하여 트리거 루프 차단
 
