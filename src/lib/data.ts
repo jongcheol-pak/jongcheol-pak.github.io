@@ -50,14 +50,15 @@ function normalizeTopLanguages(
 }
 
 async function buildCardData(repo: GitHubRepo): Promise<RepoCardData | null> {
-  // README 와 언어 분포는 독립 호출 → 병렬화
-  const [readme, languagesData] = await Promise.all([
+  // 문서(help/README)와 언어 분포는 독립 호출 → 병렬화
+  const [doc, languagesData] = await Promise.all([
     fetchReadme(repo.name),
     fetchLanguages(repo.name),
   ]);
 
-  // README 없으면 카드 목록에서 제외
-  if (!readme) return null;
+  // 문서 없으면 카드 목록에서 제외
+  if (!doc) return null;
+  const readme = doc.content;
 
   const rawImageUrl = extractFirstImage(readme, repo.name, repo.default_branch);
   // C-4: 외부 이미지를 빌드 타임에 800w/WebP 로 정규화 → 로컬 경로로 교체
@@ -214,9 +215,9 @@ export async function collectRecentReleases(limit = 3): Promise<RecentReleaseIte
 export async function getSearchIndex(): Promise<Array<{ name: string; text: string }>> {
   const cards = await getAllRepoCards();
   const entries = await mapLimit(cards, API_CONCURRENCY, async (c) => {
-    const md = await fetchReadme(c.name);
-    if (!md) return null;
-    const text = truncateBytes(toPlainText(md), SEARCH_INDEX_MAX_BYTES_PER_DOC);
+    const doc = await fetchReadme(c.name);
+    if (!doc) return null;
+    const text = truncateBytes(toPlainText(doc.content), SEARCH_INDEX_MAX_BYTES_PER_DOC);
     if (!text) return null;
     return { name: c.name.toLowerCase(), text: text.toLowerCase() };
   });
@@ -227,8 +228,8 @@ export async function getSearchIndex(): Promise<Array<{ name: string; text: stri
 export async function getDetailRouteList(): Promise<Array<{ name: string; defaultBranch: string }>> {
   const repos = await fetchTargetRepos();
   const checks = await mapLimit(repos, API_CONCURRENCY, async (r) => {
-    const readme = await fetchReadme(r.name);
-    return readme ? { name: r.name, defaultBranch: r.default_branch } : null;
+    const doc = await fetchReadme(r.name);
+    return doc ? { name: r.name, defaultBranch: r.default_branch } : null;
   });
   return checks.filter((r): r is { name: string; defaultBranch: string } => r !== null);
 }
@@ -258,14 +259,15 @@ export async function getRepoDetail(repoName: string): Promise<RepoDetailData | 
   const repo = (await getRepoMap()).get(repoName);
   if (!repo) return null;
 
-  // README/Releases 와 commit_activity 는 독립 호출 → 병렬 (B-3 빌드 시간 영향 최소화)
-  const [readme, releases, recentCommits] = await Promise.all([
+  // 문서(help/README)/Releases 와 commit_activity 는 독립 호출 → 병렬 (B-3 빌드 시간 영향 최소화)
+  const [doc, releases, recentCommits] = await Promise.all([
     fetchReadme(repoName),
     fetchReleases(repoName),
     fetchCommitActivity(repoName),
   ]);
 
-  if (!readme) return null;
+  if (!doc) return null;
+  const readme = doc.content;
 
   const readmeHtml = renderMarkdown(readme, repoName, repo.default_branch);
   const downloadUrl = resolveDownloadUrl(repoName, releases);
@@ -278,6 +280,7 @@ export async function getRepoDetail(repoName: string): Promise<RepoDetailData | 
     defaultBranch: repo.default_branch,
     readmeHtml,
     readme,
+    readmeFileName: doc.fileName,
     releases,
     downloadUrl,
     updatedAt: repo.updated_at,

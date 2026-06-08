@@ -82,6 +82,8 @@ export interface RepoDetailData {
   readmeHtml: string;
   // README 원본 Markdown (상세 페이지 복사 버튼용)
   readme: string;
+  // 상세 패널 헤더 라벨용 정규화 파일명 (help.md 표시 시 'HELP.md', 아니면 'README.md')
+  readmeFileName: 'README.md' | 'HELP.md';
   releases: GitHubRelease[];
   downloadUrl: string | null;
   // DetailHeader 에 필요한 저장소 메타 (repo 원본 재전달 제거용)

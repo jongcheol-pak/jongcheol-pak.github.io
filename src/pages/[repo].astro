@@ -55,7 +55,7 @@ const ogImagePath = `/og/${detail.name}.png`;
     <div class="detail-grid">
       <!-- 왼쪽: README -->
       <div class="detail-left">
-        <ReadmePanel html={detail.readmeHtml} markdown={detail.readme} />
+        <ReadmePanel html={detail.readmeHtml} markdown={detail.readme} fileName={detail.readmeFileName} />
       </div>
 
       <!-- 오른쪽: 최근 4주 commit sparkline + Releases + 액션 버튼 -->

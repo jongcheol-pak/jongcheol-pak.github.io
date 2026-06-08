@@ -139,9 +139,12 @@ export async function mapLimit<T, R>(
   return results;
 }
 
+// 상세 헤더 라벨용 정규화 파일명 + 본문을 함께 전달
+type ReadmeDoc = { content: string; fileName: 'README.md' | 'HELP.md' };
+
 // 모듈 스코프 메모이제이션
 let reposPromise: Promise<GitHubRepo[]> | null = null;
-const readmeCache = new Map<string, Promise<string | null>>();
+const readmeCache = new Map<string, Promise<ReadmeDoc | null>>();
 const releasesCache = new Map<string, Promise<GitHubRelease[]>>();
 const languagesCache = new Map<string, Promise<Record<string, number> | null>>();
 const commitActivityCache = new Map<string, Promise<number[] | null>>();
@@ -180,23 +183,48 @@ export function fetchPublicRepos(): Promise<GitHubRepo[]> {
   return reposPromise;
 }
 
-// README 조회 (base64 디코딩된 raw markdown)
-export function fetchReadme(repoName: string): Promise<string | null> {
+// 상세/카드/검색에서 우선 표시할 help.md 변형 (contents API 는 케이스 구분 → 변형 순차 시도)
+const HELP_VARIANTS = ['help.md', 'HELP.md', 'Help.md'] as const;
+
+// contents API 로 단일 파일 raw 텍스트 조회 — 404/디렉터리(배열)/비base64/빈내용이면 null
+async function fetchFileViaContents(repoName: string, path: string): Promise<string | null> {
+  const url = `${API_BASE}/repos/${OWNER}/${repoName}/contents/${path}`;
+  // 경로가 디렉터리면 배열(요소에 content 없음) → Array.isArray 로 먼저 배제 후 단일 파일로 좁힘
+  const data = await githubFetchData<unknown>(url);
+  if (!data || Array.isArray(data)) return null;
+  const file = data as GitHubReadme;
+  if (file.encoding !== 'base64' || !file.content) return null;
+  return Buffer.from(file.content, 'base64').toString('utf-8');
+}
+
+// 문서 조회 (base64 디코딩된 raw markdown)
+// help.md(대소문자 변형 포함) 가 있으면 우선, 없으면 README 폴백.
+// fileName 은 상세 헤더 라벨용 정규화 값
+export function fetchReadme(repoName: string): Promise<ReadmeDoc | null> {
   const cached = readmeCache.get(repoName);
   if (cached) return cached;
 
-  const url = `${API_BASE}/repos/${OWNER}/${repoName}/readme`;
-  const p = (async () => {
+  const readmeUrl = `${API_BASE}/repos/${OWNER}/${repoName}/readme`;
+  const p = (async (): Promise<ReadmeDoc | null> => {
     if (USE_MOCK) {
       const fx = await loadMockFixtures();
-      if (fx) return fx.makeMockReadme(repoName);
+      if (fx) {
+        const md = fx.makeMockReadme(repoName);
+        return md ? { content: md, fileName: 'README.md' } : null;
+      }
     }
     try {
-      const data = await githubFetchData<GitHubReadme>(url);
+      // 1) help.md 변형 우선 시도 (첫 성공 시 중단)
+      for (const variant of HELP_VARIANTS) {
+        const help = await fetchFileViaContents(repoName, variant);
+        if (help) return { content: help, fileName: 'HELP.md' };
+      }
+      // 2) README 폴백 (/readme 엔드포인트는 케이스 자동 탐지)
+      const data = await githubFetchData<GitHubReadme>(readmeUrl);
       if (!data || data.encoding !== 'base64') return null;
-      return Buffer.from(data.content, 'base64').toString('utf-8');
+      return { content: Buffer.from(data.content, 'base64').toString('utf-8'), fileName: 'README.md' };
     } catch (err) {
-      console.error(`[github] README fetch failed for ${repoName}, skipping:`, err);
+      console.error(`[github] README/help fetch failed for ${repoName}, skipping:`, err);
       return null;
     }
   })();

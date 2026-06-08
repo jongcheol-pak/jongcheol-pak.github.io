@@ -5,8 +5,10 @@ import Icon from '../Icon.astro';
 interface Props {
   html: string;
   markdown: string;
+  // 헤더에 표시할 파일명 ('README.md' 또는 'HELP.md'). 파일명은 언어 무관이라 i18n 미적용
+  fileName: string;
 }
-const { html, markdown } = Astro.props;
+const { html, markdown, fileName } = Astro.props;
 
 // 원본 Markdown 을 inline JSON 으로 직렬화 — `</script>` 가 본문에 있어도 안전하도록 `<` 를 유니코드 escape
 const markdownJson = JSON.stringify(markdown).replace(/</g, '\\u003c');
@@ -16,7 +18,7 @@ const markdownJson = JSON.stringify(markdown).replace(/</g, '\\u003c');
   <div class="readme-card-head">
     <div class="head-left">
       <Icon name="description" />
-      <span class="head-title" data-i18n="readme_heading">README.md</span>
+      <span class="head-title">{fileName}</span>
     </div>
     <button
       type="button"
