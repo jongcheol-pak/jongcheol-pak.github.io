@@ -47,8 +47,9 @@ _Lighthouse 점수 자동 갱신: 2026-06-08 (UTC)_
 - **URL 형식**: `/{repo-name}/`
 - **Top AppBar**: `← Back` + 중앙 `P-J-C` 로고 + 우 언어 드롭다운 (sticky)
 - **Project Header**: 상태 pulse 배지(`STABLE` / `BETA` / `ARCHIVED` / `FORK` / `ACTIVE`) + 최신 release tag(`vX.Y.Z_LATEST`) + **STARS 카운터(클릭 시 GitHub stargazers 페이지 새 탭, `stargazers_count == 0` 인 저장소는 미렌더)** + **OPEN ISSUES 카운터(클릭 시 GitHub 이슈 페이지 새 탭)** + 타이틀 + 설명 + `Last Updated` 상대 시간
-- **2열 레이아웃**: 왼쪽 README 카드(헤더바 + sanitize 된 prose-emerald 본문) + 오른쪽 최근 4주 commit sparkline + Releases 카드 + 액션 버튼
-- **README 원본 복사 버튼**: README 카드 헤더 우측 상단에 복사 아이콘. 클릭 시 원본 Markdown 을 클립보드에 복사 + 아이콘이 2초간 ✓ 로 변경 + 화면 하단 `복사됨` 토스트 (HTTPS 환경 필요 — 로컬 `http://localhost` 에서는 `navigator.clipboard` 미작동)
+- **2열 레이아웃**: 왼쪽 문서 카드(헤더바에 표시 파일명 라벨 + sanitize 된 prose-emerald 본문) + 오른쪽 최근 4주 commit sparkline + Releases 카드 + 액션 버튼
+- **문서 우선순위**: 저장소에 `help.md`(대소문자 변형 `help.md`/`HELP.md`/`Help.md` 포함)가 있으면 README 대신 우선 표시하고, 없으면 README 로 폴백. 헤더 라벨도 표시 파일에 맞춰 `HELP.md` / `README.md` 로 동적 표기. 이 우선순위는 카드 썸네일·요약·검색 인덱스에도 동일 적용
+- **문서 원본 복사 버튼**: 문서 카드 헤더 우측 상단에 복사 아이콘. 클릭 시 원본 Markdown(표시 중인 help.md 또는 README) 을 클립보드에 복사 + 아이콘이 2초간 ✓ 로 변경 + 화면 하단 `복사됨` 토스트 (HTTPS 환경 필요 — 로컬 `http://localhost` 에서는 `navigator.clipboard` 미작동)
 - **최근 4주 commit sparkline**: 우측 상단에 GitHub `repos/{r}/commits?since=4주전` (paginated) 으로 받은 commit 들을 7일 단위 4 bucket 으로 카운트한 미니 그래프(SVG polyline + 4 노드, 노드 hover 시 `N commits` 툴팁) + 4주 합계. 0 커밋 저장소 / 404 / rate limit / 네트워크 실패 → **미렌더 폴백**
 - **README 렌더링**: Markdown → 안전한 HTML 변환 (sanitize-html 로 XSS 방지)
 - **상대 경로 자동 해결**: README 내 이미지/링크는 GitHub raw/blob 절대 경로로 변환
@@ -60,7 +61,7 @@ _Lighthouse 점수 자동 갱신: 2026-06-08 (UTC)_
 
 ### 카드 표시 제외 규칙
 - 홈페이지 자체 저장소(`jongcheol-pak.github.io`)는 카드에서 제외
-- README.md 파일이 없는 저장소는 카드에서 제외
+- 표시할 문서(`help.md` 또는 `README.md`)가 없는 저장소는 카드에서 제외
 
 ### SEO / 공유 관련
 - **sitemap.xml**: `@astrojs/sitemap` 이 빌드 타임에 자동 생성 (`/sitemap-index.xml`). `/search-index.json` 은 검색 엔진 노이즈가 되므로 sitemap 에서 제외
@@ -270,7 +271,7 @@ _Lighthouse 점수 자동 갱신: 2026-06-08 (UTC)_
 - [x] 저장소 소유자가 **`jongcheol-pak`**
 - [x] 저장소 공개 범위가 **Public**
 - [x] 저장소 이름이 **`jongcheol-pak.github.io` 가 아닐 것** (홈페이지 자체)
-- [x] 저장소 루트에 **`README.md` 파일 존재**
+- [x] 저장소 루트에 **`help.md` 또는 `README.md` 파일 존재** (`help.md` 우선 표시)
 
 ### 선택 항목 (카드 외관 개선)
 | 항목 | 설정 위치 | 결과 |
