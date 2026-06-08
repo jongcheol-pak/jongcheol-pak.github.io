@@ -36,7 +36,7 @@
   "insight_active_projects": "활성 프로젝트",
   "insight_open_issues": "열린 이슈",
   "insight_system_uptime": "시스템 가동률",
-  "insight_last_deploy": "최근 배포",
+  "insight_last_deploy": "최근 업데이트",
   "insight_top_languages": "주요 언어",
   "insight_top_topics": "주요 토픽",
   "card_updated_prefix": "업데이트:",

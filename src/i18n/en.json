@@ -36,7 +36,7 @@
   "insight_active_projects": "ACTIVE_PROJECTS",
   "insight_open_issues": "OPEN_ISSUES",
   "insight_system_uptime": "SYSTEM_UPTIME",
-  "insight_last_deploy": "LAST_DEPLOY",
+  "insight_last_deploy": "LAST_UPDATED",
   "insight_top_languages": "TOP_LANGUAGES",
   "insight_top_topics": "TOP_TOPICS",
   "card_updated_prefix": "Updated:",
