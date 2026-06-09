@@ -1,9 +1,4 @@
-{
-  "AppGroup": {
-    "downloadUrl": "https://apps.microsoft.com/detail/9N99WJ23ZWW9",
-     "displayName": "AppGroup"
-  }
-  ,
+{ 
    "DevDashboard_WinUI": {
     "downloadUrl": "https://apps.microsoft.com/detail/9PKTKD64X5L6",
     "displayName": "프로젝트 대시보드"
@@ -12,5 +7,10 @@
    "MailTrayNotifier": {
     "downloadUrl": "https://apps.microsoft.com/detail/9P18C8T9Q3RD",
     "displayName": "메일 알리미"
+  }
+   ,
+   "WorkGroup": {
+    "downloadUrl": "https://apps.microsoft.com/detail/9NG3LWZNBQT0",
+    "displayName": "작업 그룹 관리"
   }
 }
