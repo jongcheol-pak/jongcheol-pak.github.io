@@ -1159,6 +1159,12 @@ button.card-chip[aria-pressed='true'] {
   line-height: 1.6;
   margin-top: 4px;
 }
+/* 오른쪽 메타(Last Updated) 영역은 줄어들지 않게 고정 → 설명이 길어도 1라인 유지 */
+@media (min-width: 768px) {
+  .detail-meta {
+    flex-shrink: 0;
+  }
+}
 .last-updated-label {
   color: var(--text-muted);
   font-family: 'Inter', 'Noto Sans KR', sans-serif;
@@ -1166,6 +1172,7 @@ button.card-chip[aria-pressed='true'] {
   letter-spacing: 0.1em;
   text-transform: uppercase;
   margin-bottom: 4px;
+  white-space: nowrap;
 }
 .last-updated-value {
   color: var(--emerald);
@@ -1173,6 +1180,7 @@ button.card-chip[aria-pressed='true'] {
   font-size: 18px;
   font-weight: 700;
   letter-spacing: 0.02em;
+  white-space: nowrap;
 }
 
 /* README 카드 (상세 좌측) */

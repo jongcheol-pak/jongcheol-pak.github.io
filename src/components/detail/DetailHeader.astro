@@ -80,7 +80,7 @@ const fmtKo = (iso: string): string => formatRelative(iso, 'ko');
     {description && <p class="detail-subtitle">{description}</p>}
   </div>
 
-  <div style="text-align: left;" class="md:text-right">
+  <div style="text-align: left;" class="detail-meta md:text-right">
     <p class="last-updated-label" data-i18n="last_updated_label">Last Updated</p>
     <p class="last-updated-value" data-iso={updatedAt}>{fmtKo(updatedAt)}</p>
   </div>
