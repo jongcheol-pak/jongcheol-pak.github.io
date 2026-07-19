@@ -13,4 +13,8 @@
     "downloadUrl": "https://apps.microsoft.com/detail/9NG3LWZNBQT0",
     "displayName": "작업 그룹 관리"
   }
+    ,
+   "claude-harness-pjc": {   
+    "displayName": "claude-harness-pjc (자율 루프)"
+  }
 }
