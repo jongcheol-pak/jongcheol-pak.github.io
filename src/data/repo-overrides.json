@@ -17,4 +17,9 @@
    "claude-harness-pjc": {   
     "displayName": "claude-harness-pjc (자율 루프)"
   }
+    ,
+   "DeskTube": {
+    "downloadUrl": "https://apps.microsoft.com/detail/9MXLT1RK9JPW",
+    "displayName": "데스크튜브(DeskTube)"
+  }
 }
